@@ -1,5 +1,8 @@
 package com.lightweight.taxiservice.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,16 +21,22 @@ public class Driver {
     @Column
     private String phone;
 
+    @Column
+    private String email;
+
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "driver")
+//    @JsonBackReference
     private Car car;
 
     public Driver() {
     }
 
-    public Driver(String firstName, String lastName, String phone) {
+    public Driver(String firstName, String lastName, String phone,String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.email = email;
     }
 
     public Long getId() {
@@ -70,6 +79,14 @@ public class Driver {
         this.car = car;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Driver{" +
@@ -77,6 +94,7 @@ public class Driver {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", car=" + car +
                 '}';
     }

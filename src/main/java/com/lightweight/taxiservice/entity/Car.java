@@ -1,8 +1,13 @@
 package com.lightweight.taxiservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
+
 @Table(name = "cars")
 public class Car {
 
@@ -30,6 +35,7 @@ public class Car {
 
     @OneToOne
     @JoinColumn(name = "driver_id")
+    @JsonIgnore
     private Driver driver;
 
     public Car() {
