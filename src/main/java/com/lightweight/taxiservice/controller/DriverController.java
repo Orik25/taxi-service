@@ -25,6 +25,11 @@ public class DriverController {
         return driverService.findAll();
     }
 
+    @GetMapping("/drivers/{driverId}")
+    public Driver getDriverById(@PathVariable Long driverId){
+        return driverService.findById(driverId);
+    }
+
     @PostMapping("/drivers")
     public Driver addDriver(@RequestBody Driver driver){
         return driverService.save(driver);
