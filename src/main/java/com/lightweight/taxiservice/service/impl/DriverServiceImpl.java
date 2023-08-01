@@ -2,9 +2,10 @@ package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.DriverRepository;
 import com.lightweight.taxiservice.entity.Driver;
+import com.lightweight.taxiservice.exception.NoDriverFoundException;
+import com.lightweight.taxiservice.exception.NoDriversFoundException;
 import com.lightweight.taxiservice.service.interfaces.DriverService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,19 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public List<Driver> findAll() {
-        return driverRepository.findAll();
-    }//todo:implement exception, when there aren`t any drivers
+        List<Driver> drivers = driverRepository.findAll();
+        if (!drivers.isEmpty()) {
+            return drivers;
+        } else {
+            throw new NoDriversFoundException("There are no drivers exist");
+        }
+    }
 
     @Override
-    public Driver findById(Long id){
-        return driverRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Driver not found with id: " + id));
-    }//todo:handle exception
+    public Driver findById(Long id) {
+        return driverRepository.findById(id)
+                .orElseThrow(() -> new NoDriverFoundException("Driver not found with id: " + id));
+    }
 
     @Override
     public Driver save(Driver driver) {
@@ -36,6 +43,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void deleteById(Long id) {
+        driverRepository.findById(id)
+                .orElseThrow(() -> new NoDriverFoundException("That driver cannot be deleted because " +
+                        "driver with id: " + id + " not found"));
         driverRepository.deleteById(id);
-    }//todo:implement exception, when driver doesn`t exist and send correct response(change func type to String)
+    }
 }

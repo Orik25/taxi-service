@@ -1,9 +1,7 @@
 package com.lightweight.taxiservice.controller;
 
 import com.lightweight.taxiservice.entity.Car;
-import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.service.interfaces.CarService;
-import com.lightweight.taxiservice.service.interfaces.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,14 @@ public class CarController {
     public List<Car> getCars(){
         return carService.findAll();
     }
-    @GetMapping("/free-cars")
-    public List<Car> getFreeCars(){
+
+    @GetMapping("/cars/{carId}")
+    public Car getCarById(@PathVariable Long carId){
+        return carService.findById(carId);
+    }
+
+    @GetMapping("/available-cars")
+    public List<Car> getAvailableCars(){
         return carService.findCarsByDriverIdIsNull();
     }
 
