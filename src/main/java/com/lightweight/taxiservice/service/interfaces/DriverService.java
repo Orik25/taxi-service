@@ -7,6 +7,6 @@ import java.util.List;
 public interface DriverService {
     List<Driver> findAll();
     Driver findById(Long id);
-    Driver save(Driver employee);
+    Driver save(Driver driver);
     void deleteById(Long id);
 }
