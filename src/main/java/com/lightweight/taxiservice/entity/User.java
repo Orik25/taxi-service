@@ -1,5 +1,6 @@
 package com.lightweight.taxiservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -27,6 +28,7 @@ public class User {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JsonBackReference(value = "userRole")
     private Role role;
 
     public User() {

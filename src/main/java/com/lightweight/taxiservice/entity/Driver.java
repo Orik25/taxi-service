@@ -25,8 +25,9 @@ public class Driver {
     private String email;
 
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "driver")
-//    @JsonBackReference
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST},
+            mappedBy = "driver")
+    @JsonManagedReference(value = "driverCar")
     private Car car;
 
     public Driver() {

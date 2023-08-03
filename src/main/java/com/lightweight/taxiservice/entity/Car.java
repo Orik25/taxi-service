@@ -33,9 +33,9 @@ public class Car {
     @Column
     private int capacity;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "driver_id")
-    @JsonIgnore
+    @JsonBackReference(value = "driverCar")
     private Driver driver;
 
     public Car() {
