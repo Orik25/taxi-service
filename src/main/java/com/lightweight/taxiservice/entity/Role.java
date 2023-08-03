@@ -1,5 +1,6 @@
 package com.lightweight.taxiservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy = "role")
+    @JsonManagedReference(value = "userRole")
     private List<User> users;
 
     public Role() {
