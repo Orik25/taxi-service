@@ -10,6 +10,7 @@ public interface UserService{
     List<User> findAll();
     List<User> findUsersByRoleName(String role);
     User findById(Long id);
+    User findByEmail(String email);
     User save(User user);
     void deleteById(Long id);
 }
