@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,11 +51,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new NoUserFoundException("User not found with email: " + email);
+        Optional<User> optionalUser = getOptionalUserByEmail(email);
+        if (optionalUser.isEmpty()) {
+            throw new NoUsersFoundException("User not found with that email" + email);
         }
-        return user;
+
+        return optionalUser.get();
     }
 
     @Override
@@ -68,5 +70,9 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NoUserFoundException("That user cannot be deleted because " +
                         "user with id: " + id + " not found"));
         userRepository.deleteById(id);
+    }
+
+    private Optional<User> getOptionalUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
