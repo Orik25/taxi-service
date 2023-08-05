@@ -1,14 +1,14 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.UserRepository;
-import com.lightweight.taxiservice.entity.Car;
-import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.entity.User;
-import com.lightweight.taxiservice.exception.NoDriversFoundException;
 import com.lightweight.taxiservice.exception.NoUserFoundException;
 import com.lightweight.taxiservice.exception.NoUsersFoundException;
+import com.lightweight.taxiservice.service.interfaces.RoleService;
 import com.lightweight.taxiservice.service.interfaces.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +17,14 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+    private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     @Override
@@ -51,12 +55,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        Optional<User> optionalUser = getOptionalUserByEmail(email);
-        if (optionalUser.isEmpty()) {
-            throw new NoUsersFoundException("User not found with that email" + email);
-        }
-
-        return optionalUser.get();
+        return getOptionalUserByEmail(email)
+                .orElseThrow(() ->new NoUserFoundException("User not found with that email" + email));
     }
 
     @Override
@@ -74,5 +74,18 @@ public class UserServiceImpl implements UserService {
 
     private Optional<User> getOptionalUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    @Transactional
+    public User registerUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("The user with this email already exists");
+        }
+
+        user.setRole(roleService.findById(2L));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(user);
     }
 }

@@ -26,7 +26,7 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @JsonBackReference(value = "userRole")
     private Role role;
