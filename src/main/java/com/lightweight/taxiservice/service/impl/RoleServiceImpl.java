@@ -1,9 +1,7 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.RoleRepository;
-import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.entity.Role;
-import com.lightweight.taxiservice.entity.User;
 import com.lightweight.taxiservice.exception.*;
 import com.lightweight.taxiservice.service.interfaces.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findById(Long id) {
+        isDatabaseEmpty();
         return roleRepository.findById(id)
                 .orElseThrow(() -> new NoRoleFoundException("Role not found with id: " + id));
     }
@@ -43,6 +42,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role update(Role role) {
+        isDatabaseEmpty();
         Long id = role.getId();
         roleRepository.findById(id)
                 .orElseThrow(() -> new NoRoleFoundException("Impossible to update the Role. Role not found with id: " + id));
@@ -55,5 +55,10 @@ public class RoleServiceImpl implements RoleService {
                 .orElseThrow(() -> new NoRoleFoundException("That role cannot be deleted because " +
                         "role with id: " + id + " not found"));
         roleRepository.deleteById(id);
+    }
+
+    private void isDatabaseEmpty() {
+        roleRepository.findFirstByOrderByIdAsc()
+                .orElseThrow(() -> new NoRoleFoundException("Data base has not any records of roles"));
     }
 }
