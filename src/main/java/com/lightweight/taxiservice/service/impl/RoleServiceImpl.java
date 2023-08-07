@@ -42,6 +42,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Role update(Role role) {
+        Long id = role.getId();
+        roleRepository.findById(id)
+                .orElseThrow(() -> new NoRoleFoundException("Impossible to update the Role. Role not found with id: " + id));
+        return roleRepository.save(role);
+    }
+
+    @Override
     public void deleteById(Long id) {
         roleRepository.findById(id)
                 .orElseThrow(() -> new NoRoleFoundException("That role cannot be deleted because " +

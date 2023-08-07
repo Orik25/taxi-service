@@ -42,6 +42,14 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
+    public Driver update(Driver driver) {
+        Long id = driver.getId();
+        driverRepository.findById(id)
+                .orElseThrow(() -> new NoDriverFoundException("Impossible to update the Driver. Driver not found with id: " + id));
+        return driverRepository.save(driver);
+    }
+
+    @Override
     public void deleteById(Long id) {
         driverRepository.findById(id)
                 .orElseThrow(() -> new NoDriverFoundException("That driver cannot be deleted because " +

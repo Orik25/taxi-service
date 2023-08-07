@@ -49,6 +49,14 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public Car update(Car car) {
+        Long id = car.getId();
+        carRepository.findById(id)
+                .orElseThrow(()->new NoCarFoundException("Impossible to update the Car. Car not found with id: " + id));
+        return carRepository.save(car);
+    }
+
+    @Override
     public Car save(Car car) {
         return carRepository.save(car);
     }
