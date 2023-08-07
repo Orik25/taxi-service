@@ -8,5 +8,6 @@ public interface DriverService {
     List<Driver> findAll();
     Driver findById(Long id);
     Driver save(Driver driver);
+    Driver update(Driver driver);
     void deleteById(Long id);
 }

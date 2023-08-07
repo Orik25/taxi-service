@@ -65,6 +65,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User update(User user) {
+        Long id = user.getId();
+        userRepository.findById(id)
+                .orElseThrow(() -> new NoUserFoundException("Impossible to update the User. User not found with id: " + id));
+        return userRepository.save(user);
+    }
+
+    @Override
     public void deleteById(Long id) {
         userRepository.findById(id)
                 .orElseThrow(() -> new NoUserFoundException("That user cannot be deleted because " +

@@ -38,7 +38,7 @@ public class DriverController {
     @PutMapping("/drivers/{driverId}")
     public Driver updateDriver(@PathVariable Long driverId, @RequestBody Driver updatedDriver) {
         updatedDriver.setId(driverId);
-        return driverService.save(updatedDriver);
+        return driverService.update(updatedDriver);
     }
 
     @DeleteMapping("/drivers/{driverId}")

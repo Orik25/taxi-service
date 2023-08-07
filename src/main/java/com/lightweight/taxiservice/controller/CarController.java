@@ -38,7 +38,7 @@ public class CarController {
     @PutMapping("/cars/{carId}")
     public Car updateDriver(@PathVariable Long carId, @RequestBody Car updatedCar) {
         updatedCar.setId(carId);
-        return carService.save(updatedCar);
+        return carService.update(updatedCar);
     }
 
     @DeleteMapping("/cars/{carId}")
