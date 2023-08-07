@@ -2,6 +2,7 @@ package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.DriverRepository;
 import com.lightweight.taxiservice.entity.Driver;
+import com.lightweight.taxiservice.exception.NoCarFoundException;
 import com.lightweight.taxiservice.exception.NoDriverFoundException;
 import com.lightweight.taxiservice.exception.NoDriversFoundException;
 import com.lightweight.taxiservice.service.interfaces.DriverService;
@@ -32,6 +33,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver findById(Long id) {
+        isDatabaseEmpty();
         return driverRepository.findById(id)
                 .orElseThrow(() -> new NoDriverFoundException("Driver not found with id: " + id));
     }
@@ -43,6 +45,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver update(Driver driver) {
+        isDatabaseEmpty();
         Long id = driver.getId();
         driverRepository.findById(id)
                 .orElseThrow(() -> new NoDriverFoundException("Impossible to update the Driver. Driver not found with id: " + id));
@@ -55,5 +58,10 @@ public class DriverServiceImpl implements DriverService {
                 .orElseThrow(() -> new NoDriverFoundException("That driver cannot be deleted because " +
                         "driver with id: " + id + " not found"));
         driverRepository.deleteById(id);
+    }
+
+    private void isDatabaseEmpty() {
+        driverRepository.findFirstByOrderByIdAsc()
+                .orElseThrow(() -> new NoDriverFoundException("Data base has not any records of drivers"));
     }
 }

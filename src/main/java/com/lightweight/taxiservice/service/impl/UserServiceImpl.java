@@ -49,14 +49,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
+        isDatabaseEmpty();
         return userRepository.findById(id)
                 .orElseThrow(() -> new NoUserFoundException("User not found with id: " + id));
     }
 
     @Override
     public User findByEmail(String email) {
+        isDatabaseEmpty();
         return getOptionalUserByEmail(email)
-                .orElseThrow(() ->new NoUserFoundException("User not found with that email" + email));
+                .orElseThrow(() -> new NoUserFoundException("User not found with that email" + email));
     }
 
     @Override
@@ -66,6 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
+        isDatabaseEmpty();
         Long id = user.getId();
         userRepository.findById(id)
                 .orElseThrow(() -> new NoUserFoundException("Impossible to update the User. User not found with id: " + id));
@@ -87,13 +90,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User registerUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("The user with this email already exists");
-        }
+        userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("The user with this email already exists"));
+
 
         user.setRole(roleService.findById(2L));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
+    }
+
+    private void isDatabaseEmpty() {
+        userRepository.findFirstByOrderByIdAsc()
+                .orElseThrow(() -> new NoUserFoundException("Data base has not any records of users"));
     }
 }
