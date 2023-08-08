@@ -5,9 +5,7 @@
   <title>Hello World!</title>
 </head>
 <body>
-<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="Sign Out"/>
-</form>
+<h1 th:inline="text">Hello byk! This is our main page of FakeTaxi!</h1>
+<a th:href="@{/login}" class="btn">Go to Login</a>
 </body>
 </html>

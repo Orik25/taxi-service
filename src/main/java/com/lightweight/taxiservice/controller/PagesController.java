@@ -2,10 +2,9 @@ package com.lightweight.taxiservice.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class Hello {
+public class PagesController {
 
     @GetMapping("/")
     public String helloPage(){
