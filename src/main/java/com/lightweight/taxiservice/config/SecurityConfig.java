@@ -24,7 +24,6 @@ public class SecurityConfig {
         http
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
-//                        "/available-cars"
                         .requestMatchers("/","/registration","/login").permitAll()
                         .requestMatchers(HttpMethod.GET,"/cars/**").hasAnyRole(ADMIN,USER)
                         .requestMatchers(HttpMethod.GET,"/drivers/**").hasAnyRole(ADMIN,USER)
