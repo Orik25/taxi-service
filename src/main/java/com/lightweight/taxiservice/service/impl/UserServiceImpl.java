@@ -1,6 +1,9 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.UserRepository;
+import com.lightweight.taxiservice.entity.Car;
+import com.lightweight.taxiservice.entity.Driver;
+import com.lightweight.taxiservice.entity.Role;
 import com.lightweight.taxiservice.entity.User;
 import com.lightweight.taxiservice.exception.NoUserFoundException;
 import com.lightweight.taxiservice.exception.NoUsersFoundException;
@@ -77,10 +80,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        userRepository.findById(id)
-                .orElseThrow(() -> new NoUserFoundException("That user cannot be deleted because " +
-                        "user with id: " + id + " not found"));
-        userRepository.deleteById(id);
+        User user = findById(id);
+
+        user.setRole(null);
+        userRepository.delete(user);
     }
 
     private Optional<User> getOptionalUserByEmail(String email) {

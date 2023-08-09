@@ -1,12 +1,15 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.DriverRepository;
+import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.exception.NoCarFoundException;
 import com.lightweight.taxiservice.exception.NoDriverFoundException;
 import com.lightweight.taxiservice.exception.NoDriversFoundException;
 import com.lightweight.taxiservice.service.interfaces.DriverService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Transient;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,10 +57,13 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void deleteById(Long id) {
-        driverRepository.findById(id)
-                .orElseThrow(() -> new NoDriverFoundException("That driver cannot be deleted because " +
-                        "driver with id: " + id + " not found"));
-        driverRepository.deleteById(id);
+        Driver driver = findById(id);
+
+        Car car = driver.getCar();
+        if (car != null) {
+            car.setDriver(null);
+        }
+        driverRepository.delete(driver);
     }
 
     private void isDatabaseEmpty() {

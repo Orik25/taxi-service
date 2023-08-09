@@ -2,8 +2,11 @@ package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.CarRepository;
 import com.lightweight.taxiservice.entity.Car;
+import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.exception.*;
 import com.lightweight.taxiservice.service.interfaces.CarService;
+import jakarta.persistence.Transient;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,10 +64,13 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteById(Long id) {
-        carRepository.findById(id).orElseThrow(() ->
-                new NoCarFoundException("That car cannot be deleted because " +
-                        "car with id: " + id + " not found"));
-        carRepository.deleteById(id);
+        Car car = findById(id);
+
+        Driver driver = car.getDriver();
+        if (driver != null) {
+            driver.setCar(null);
+        }
+        carRepository.delete(car);
     }
 
     private void isDatabaseEmpty() {
