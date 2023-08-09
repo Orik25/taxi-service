@@ -8,9 +8,14 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Configuration
@@ -24,26 +29,44 @@ public class SecurityConfig {
         http
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
-//                        "/available-cars"
                         .requestMatchers("/","/registration","/login").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/cars/**").hasAnyRole(ADMIN,USER)
-                        .requestMatchers(HttpMethod.GET,"/drivers/**").hasAnyRole(ADMIN,USER)
-                        .requestMatchers(HttpMethod.DELETE,"/cars/**","/drivers/**").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.PUT,"/cars/**","/drivers/**").hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.POST,"/cars/**","/drivers/**").hasRole(ADMIN)
-                        .requestMatchers("/available-cars").hasRole(ADMIN)
-                        .requestMatchers("/roles/**").hasRole(ADMIN)
-                        .requestMatchers("/users/**","/user/**").hasRole(ADMIN)
+                        .requestMatchers(HttpMethod.GET,"*/cars/**").hasAnyRole(ADMIN,USER)
+                        .requestMatchers(HttpMethod.GET,"*/drivers/**").hasAnyRole(ADMIN,USER)
+                        .requestMatchers(HttpMethod.DELETE,"*/cars/**","*/drivers/**").hasRole(ADMIN)
+                        .requestMatchers(HttpMethod.PUT,"*/cars/**","*/drivers/**").hasRole(ADMIN)
+                        .requestMatchers(HttpMethod.POST,"*/cars/**","*/drivers/**").hasRole(ADMIN)
+                        .requestMatchers("*/available-cars").hasRole(ADMIN)
+                        .requestMatchers("*/roles/**").hasRole(ADMIN)
+                        .requestMatchers("*/users/**","*/user/**").hasRole(ADMIN)
+                        .requestMatchers("/system").hasRole(ADMIN)
+                        .requestMatchers("/taxi").hasRole(USER)
 
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .successHandler(successHandler())
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)
                 .httpBasic(Customizer.withDefaults());
         return http.build();
+    }
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        Map<String, String> roleRedirectMap = new HashMap<>();
+        roleRedirectMap.put(RoleData.ADMIN.getDBRoleName(), "/system");
+        roleRedirectMap.put(RoleData.USER.getDBRoleName(), "/taxi");
+
+        return (request, response, authentication) -> {
+            for (GrantedAuthority auth : authentication.getAuthorities()) {
+                String authority = auth.getAuthority();
+                if (roleRedirectMap.containsKey(authority)) {
+                    response.sendRedirect(roleRedirectMap.get(authority));
+                    return;
+                }
+            }
+        };
     }
 
     @Bean

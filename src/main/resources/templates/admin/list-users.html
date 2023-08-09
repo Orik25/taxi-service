@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>List of Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<form th:action="@{/system}" method="get">
+    <input type="submit" value="<-back"/>
+</form>
+<div class="container">
+
+    <h3>Users Directory</h3>
+    <hr>
+
+    <!--    <a th:href = "@{/employees/showFormForAdd}"-->
+    <!--       class="btn btn-primary btn-sm mb-3">Add Employee</a>-->
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempUser : ${users}">
+
+            <td th:text="${tempUser.firstName}" />
+            <td th:text="${tempUser.lastName}" />
+            <td th:text="${tempUser.email}" />
+            <td th:text="${tempUser.phone}" />
+            <td th:text="${tempUser.role.name}" />
+            <!--            <td>-->
+            <!--                <a th:href = "@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"-->
+            <!--                   class="btn btn-info btn-sm">-->
+            <!--                    Update-->
+            <!--                </a>-->
+            <!--                <a th:href = "@{/employees/delete(employeeId=${tempEmployee.id})}"-->
+            <!--                   class="btn btn-danger btn-sm"-->
+            <!--                   onclick="if(!(confirm('Are you sure?'))) return false">-->
+            <!--                    Delete-->
+            <!--                </a>-->
+            <!--            </td>-->
+
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</body>
+</html>
