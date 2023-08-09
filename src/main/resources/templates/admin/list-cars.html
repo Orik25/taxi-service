@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+
+    <title>List of Cars</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+
+<form th:action="@{/system}" method="get">
+    <input type="submit" value="<-back"/>
+</form>
+<div class="container">
+
+    <h3>Cars Directory</h3>
+    <hr>
+
+    <!--    <a th:href = "@{/employees/showFormForAdd}"-->
+    <!--       class="btn btn-primary btn-sm mb-3">Add Employee</a>-->
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Capacity</th>
+            <th>Driver First Name</th>
+            <th>Driver Last Name</th>
+            <th>Driver Phone</th>
+            <th>Driver Email</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="tempCars : ${cars}">
+
+            <td th:text="${tempCars.brand}" />
+            <td th:text="${tempCars.model}" />
+            <td th:text="${tempCars.year}" />
+            <td th:text="${tempCars.category}" />
+            <td th:text="${tempCars.status}" />
+            <td th:text="${tempCars.capacity}"/>
+            <td th:text="${tempCars.driver?.firstName}" />
+            <td th:text="${tempCars.driver?.lastName}" />
+            <td th:text="${tempCars.driver?.phone}" />
+            <td th:text="${tempCars.driver?.email}" />
+
+            <!--            <td>-->
+            <!--                <a th:href = "@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"-->
+            <!--                   class="btn btn-info btn-sm">-->
+            <!--                    Update-->
+            <!--                </a>-->
+            <!--                <a th:href = "@{/employees/delete(employeeId=${tempEmployee.id})}"-->
+            <!--                   class="btn btn-danger btn-sm"-->
+            <!--                   onclick="if(!(confirm('Are you sure?'))) return false">-->
+            <!--                    Delete-->
+            <!--                </a>-->
+            <!--            </td>-->
+
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</body>
+</html>

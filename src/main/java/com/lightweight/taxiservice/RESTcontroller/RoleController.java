@@ -1,9 +1,7 @@
-package com.lightweight.taxiservice.controller;
+package com.lightweight.taxiservice.RESTcontroller;
 
 import com.lightweight.taxiservice.entity.Role;
-import com.lightweight.taxiservice.entity.User;
 import com.lightweight.taxiservice.service.interfaces.RoleService;
-import com.lightweight.taxiservice.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

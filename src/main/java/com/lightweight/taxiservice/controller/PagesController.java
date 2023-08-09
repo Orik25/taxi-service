@@ -2,6 +2,7 @@ package com.lightweight.taxiservice.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PagesController {
@@ -14,5 +15,15 @@ public class PagesController {
     @GetMapping("/login")
     public String loginPage(){
         return "login";
+    }
+
+    @GetMapping("/system")
+    public String systemPage(){
+        return "admin/system";
+    }
+
+    @GetMapping("/taxi")
+    public String taxiPage(){
+        return "user/taxi";
     }
 }
