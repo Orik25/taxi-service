@@ -73,6 +73,16 @@ public class CarServiceImpl implements CarService {
         carRepository.delete(car);
     }
 
+    @Override
+    public List<Car> getAvailableCarsForOrder() {
+        List<Car> cars = carRepository.findAllByStatus("available");
+        if (!cars.isEmpty()) {
+            return cars;
+        } else {
+            throw new NoAvailableCarsException("There are no available cars for order");
+        }
+    }
+
     private void isDatabaseEmpty() {
         carRepository.findFirstByOrderByIdAsc()
                 .orElseThrow(() -> new NoCarFoundException("Data base has not any records of cars"));
