@@ -31,6 +31,11 @@ public class CarController {
         return carService.findCarsByDriverIdIsNull();
     }
 
+    @GetMapping("/available-cars-for-order")
+    public List<Car> getAvailableCarsForOrder(){
+        return carService.getAvailableCarsForOrder();
+    }
+
     @PostMapping("/cars")
     public Car addCar(@RequestBody Car car){
         return carService.save(car);
