@@ -80,10 +80,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        User user = findById(id);
+        isDatabaseEmpty();
+        userRepository.findById(id)
+                .orElseThrow(() -> new NoUserFoundException("Impossible to delete the User. User not found with id: " + id));
 
-        user.setRole(null);
-        userRepository.delete(user);
+        userRepository.deleteById(id);
     }
 
     private Optional<User> getOptionalUserByEmail(String email) {

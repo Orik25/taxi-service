@@ -64,7 +64,9 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteById(Long id) {
-        Car car = findById(id);
+        isDatabaseEmpty();
+        Car car = carRepository.findById(id)
+                .orElseThrow(()->new NoCarFoundException("Impossible to delete the Car. Car not found with id: " + id));
 
         Driver driver = car.getDriver();
         if (driver != null) {
