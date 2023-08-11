@@ -38,6 +38,11 @@ public class Car {
     @JsonBackReference(value = "driverCar")
     private Driver driver;
 
+    @OneToOne(cascade = {CascadeType.ALL}
+            ,mappedBy = "car")
+    @JsonManagedReference(value = "coordinatesCar")
+    private CarCoordinates carCoordinates;
+
     public Car() {
     }
 
@@ -114,6 +119,14 @@ public class Car {
         this.driver = driver;
     }
 
+    public CarCoordinates getCarCoordinates() {
+        return carCoordinates;
+    }
+
+    public void setCarCoordinates(CarCoordinates carCoordinates) {
+        this.carCoordinates = carCoordinates;
+    }
+
     @Override
     public String toString() {
         return "Car{" +
@@ -125,6 +138,7 @@ public class Car {
                 ", status='" + status + '\'' +
                 ", capacity=" + capacity +
                 ", driver=" + driver +
+                ", carCoordinates=" + carCoordinates +
                 '}';
     }
 }

@@ -96,4 +96,20 @@ public class GlobalRestExceptionHandler {
         rolesErrorResponse.setTimeStamp(System.currentTimeMillis());
         return new ResponseEntity<>(rolesErrorResponse, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(NoCarCoordinatesFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(NoCarCoordinatesFoundException exception) {
+        ErrorResponse rolesErrorResponse = new ErrorResponse();
+        rolesErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        rolesErrorResponse.setMessage(exception.getMessage());
+        rolesErrorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(rolesErrorResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(NoListOfCarCoordinatesFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(NoListOfCarCoordinatesFoundException exception) {
+        ErrorResponse rolesErrorResponse = new ErrorResponse();
+        rolesErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        rolesErrorResponse.setMessage(exception.getMessage());
+        rolesErrorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(rolesErrorResponse, HttpStatus.NOT_FOUND);
+    }
 }

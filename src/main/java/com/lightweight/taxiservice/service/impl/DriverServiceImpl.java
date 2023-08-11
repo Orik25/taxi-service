@@ -57,7 +57,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void deleteById(Long id) {
-        Driver driver = findById(id);
+        isDatabaseEmpty();
+        Driver driver = driverRepository.findById(id)
+                .orElseThrow(() -> new NoDriverFoundException("Impossible to delete the Driver. Driver not found with id: " + id));
 
         Car car = driver.getCar();
         if (car != null) {
