@@ -112,4 +112,22 @@ public class GlobalRestExceptionHandler {
         rolesErrorResponse.setTimeStamp(System.currentTimeMillis());
         return new ResponseEntity<>(rolesErrorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(NoOrderFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(NoOrderFoundException exception) {
+        ErrorResponse orderErrorResponse = new ErrorResponse();
+        orderErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        orderErrorResponse.setMessage(exception.getMessage());
+        orderErrorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(orderErrorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoOrdersFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(NoOrdersFoundException exception) {
+        ErrorResponse ordersErrorResponse = new ErrorResponse();
+        ordersErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        ordersErrorResponse.setMessage(exception.getMessage());
+        ordersErrorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(ordersErrorResponse, HttpStatus.NOT_FOUND);
+    }
 }

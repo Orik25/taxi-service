@@ -1,4 +1,4 @@
-package com.lightweight.taxiservice.RESTcontroller;
+package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import org.springframework.ui.Model;
 import com.lightweight.taxiservice.entity.User;
