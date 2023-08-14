@@ -1,6 +1,8 @@
 package com.lightweight.taxiservice.controller.RESTcontroller;
 
-import com.lightweight.taxiservice.entity.Car;
+
+import com.lightweight.taxiservice.DTO.order.ConverterOrderDTO;
+import com.lightweight.taxiservice.DTO.order.CreatedOrderDTO;
 import com.lightweight.taxiservice.entity.Order;
 import com.lightweight.taxiservice.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import java.util.List;
 @RestController
 public class OrderController {
     private OrderService orderService;
+    private ConverterOrderDTO converterOrderDTO;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, ConverterOrderDTO converterOrderDTO) {
         this.orderService = orderService;
+        this.converterOrderDTO = converterOrderDTO;
     }
 
     @GetMapping("/orders")
@@ -28,8 +32,9 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public Order addOrder(@RequestBody Order order){
-        return orderService.save(order);
+    public Order addOrder(@RequestBody CreatedOrderDTO createdOrderDTO){
+        Order newOrder = converterOrderDTO.convertToEntity(createdOrderDTO);
+        return orderService.save(newOrder);
     }
 
     @PutMapping("/orders/{orderId}")
