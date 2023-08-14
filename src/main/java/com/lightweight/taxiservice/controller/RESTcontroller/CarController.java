@@ -1,4 +1,4 @@
-package com.lightweight.taxiservice.RESTcontroller;
+package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.service.interfaces.CarService;
@@ -42,13 +42,13 @@ public class CarController {
     }
 
     @PutMapping("/cars/{carId}")
-    public Car updateDriver(@PathVariable Long carId, @RequestBody Car updatedCar) {
+    public Car updateCar(@PathVariable Long carId, @RequestBody Car updatedCar) {
         updatedCar.setId(carId);
         return carService.update(updatedCar);
     }
 
     @DeleteMapping("/cars/{carId}")
-    public void deleteDriver(@PathVariable Long carId){
+    public void deleteCar(@PathVariable Long carId){
         Car deletedCar = carService.findById(carId);
         carService.deleteById(carId);
     }

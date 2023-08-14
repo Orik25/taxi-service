@@ -1,7 +1,10 @@
 package com.lightweight.taxiservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -31,16 +34,22 @@ public class User {
     @JsonBackReference(value = "userRole")
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "orderUser")
+    private List<Order> orders;
+
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, String password, String phone, Role role) {
+    public User(String email, String firstName, String lastName, String password,
+                String phone, Role role, List<Order> orders) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.phone = phone;
         this.role = role;
+        this.orders = orders;
     }
 
     public Long getId() {
@@ -97,5 +106,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

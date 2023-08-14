@@ -1,4 +1,4 @@
-package com.lightweight.taxiservice.RESTcontroller;
+package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.service.interfaces.DriverService;

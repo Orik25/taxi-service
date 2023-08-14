@@ -1,9 +1,9 @@
 package com.lightweight.taxiservice.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "drivers")
@@ -30,14 +30,19 @@ public class Driver {
     @JsonManagedReference(value = "driverCar")
     private Car car;
 
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "orderDriver")
+    private List<Order> orders;
+
     public Driver() {
     }
 
-    public Driver(String firstName, String lastName, String phone,String email) {
+    public Driver(String firstName, String lastName, String phone, String email, List<Order> orders) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
+        this.orders = orders;
     }
 
     public Long getId() {
@@ -86,6 +91,14 @@ public class Driver {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

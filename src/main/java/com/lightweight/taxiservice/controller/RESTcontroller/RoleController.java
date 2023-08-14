@@ -1,4 +1,4 @@
-package com.lightweight.taxiservice.RESTcontroller;
+package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import com.lightweight.taxiservice.entity.Role;
 import com.lightweight.taxiservice.service.interfaces.RoleService;
