@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE,"*/cars/**","*/drivers/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.PUT,"*/cars/**","*/drivers/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.POST,"*/cars/**","*/drivers/**").hasRole(ADMIN)
+                        .requestMatchers("*/orders/**").hasRole(ADMIN)
                         .requestMatchers("*/available-cars").hasRole(ADMIN)
                         .requestMatchers("*/roles/**").hasRole(ADMIN)
                         .requestMatchers("*/users/**","*/user/**").hasRole(ADMIN)
