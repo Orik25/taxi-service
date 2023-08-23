@@ -94,10 +94,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User registerUser(User user) {
-        userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() ->
-                        new IllegalArgumentException("The user with this email already exists"));
-
+        boolean isPresent = userRepository.findByEmail(user.getEmail()).isPresent();
+        if (isPresent){
+            throw new IllegalArgumentException("The user with this email already exists");
+        }
 
         user.setRole(roleService.findById(2L));
         user.setPassword(passwordEncoder.encode(user.getPassword()));

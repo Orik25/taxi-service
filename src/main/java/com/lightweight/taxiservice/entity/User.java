@@ -3,6 +3,7 @@ package com.lightweight.taxiservice.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -14,18 +15,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Email(message = "Not correct email")
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Pattern(message = "Must contain only letters, first must be uppercase",
+            regexp = "^[A-Z][a-z]+$")
     @Column(name = "first_name")
     private String firstName;
 
+    @Pattern(message = "Must contain only letters, first must be uppercase",
+            regexp = "^[A-Z][a-z]+$")
     @Column(name = "last_name")
     private String lastName;
 
+    @Pattern(message = "Must contain at least 1 capital letter, at least 1 number, at least 8 characters",
+            regexp = "^(?=.*[A-Z])(?=.*\\d).{8,}$")
     @Column(name = "password")
     private String password;
 
+    @Pattern(message = "Unsupported type of number",
+            regexp = "^(\\+\\d{1,3})?[-.\\s]?\\(?(\\d{3})\\)?[-.\\s]?(\\d{3})[-.\\s]?(\\d{4})$")
     @Column(name = "phone", nullable = false)
     private String phone;
 
