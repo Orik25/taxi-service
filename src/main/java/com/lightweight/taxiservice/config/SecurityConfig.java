@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/","/registration","/login").permitAll()
+                        .requestMatchers("/","/registration").permitAll()
                         .requestMatchers(HttpMethod.GET,"*/cars/**").hasAnyRole(ADMIN,USER)
                         .requestMatchers(HttpMethod.GET,"*/drivers/**").hasAnyRole(ADMIN,USER)
                         .requestMatchers(HttpMethod.DELETE,"*/cars/**","*/drivers/**").hasRole(ADMIN)
@@ -42,12 +42,11 @@ public class SecurityConfig {
                         .requestMatchers("/system").hasRole(ADMIN)
                         .requestMatchers("/taxi").hasRole(USER)
                         .requestMatchers("/available-cars-for-order").hasAnyRole(ADMIN, USER)
-
-                        .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .successHandler(successHandler())
+
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)

@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         isDatabaseEmpty();
         return getOptionalUserByEmail(email)
-                .orElseThrow(() -> new NoUserFoundException("User not found with that email" + email));
+                .orElseThrow(() -> new NoUserFoundException("User not found with that email " + email));
     }
 
     @Override
