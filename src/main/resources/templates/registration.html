@@ -7,16 +7,38 @@
 <body>
 <h2>Реєстрація</h2>
 <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
-    <label for="firstName">Ім'я:</label>
-    <input type="text" id="firstName" name="firstName" required><br>
-    <label for="lastName">Прізвище:</label>
-    <input type="text" id="lastName" name="lastName" required><br>
-    <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required><br>
-    <label for="phone">Телефон:</label>
-    <input type="text" id="phone" name="phone" required><br>
+
+    Email: <input type="text" th:field = "*{email}">
+    <span th:if="${#fields.hasErrors('email')}"
+          th:errors = "*{email}"
+          class="error">is required</span>
+    <br>
+
+    Ім'я: <input type="text" th:field = "*{firstName}">
+    <span th:if="${#fields.hasErrors('firstName')}"
+          th:errors = "*{firstName}"
+          class="error">is required</span>
+    <br>
+
+
+    Прізвище: <input type="text" th:field = "*{lastName}">
+    <span th:if="${#fields.hasErrors('lastName')}"
+          th:errors = "*{lastName}"
+          class="error">is required</span>
+    <br>
+
+    Пароль: <input type="password" th:field = "*{password}">
+    <span th:if="${#fields.hasErrors('password')}"
+          th:errors = "*{password}"
+          class="error">is required</span>
+    <br>
+
+    Телефон: <input type="text" th:field = "*{phone}">
+    <span th:if="${#fields.hasErrors('phone')}"
+          th:errors = "*{phone}"
+          class="error">is required</span>
+    <br>
+
     <button type="submit">Зареєструватися</button>
 </form>
 </body>
