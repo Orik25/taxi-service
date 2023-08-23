@@ -1,7 +1,6 @@
 package com.lightweight.taxiservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -57,7 +56,7 @@ public class CarCoordinates {
         return car;
     }
 
-    public void setCarId(Car car) {
+    public void setCar(Car car) {
         this.car = car;
     }
 
