@@ -2,6 +2,7 @@ package com.lightweight.taxiservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.lightweight.taxiservice.validation.email.UniqueEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -16,6 +17,8 @@ public class User {
     private Long id;
 
     @Email(message = "Not correct email")
+    @UniqueEmail
+    @NotBlank(message = "Email is mandatory")
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
