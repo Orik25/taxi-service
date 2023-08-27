@@ -13,7 +13,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
     public String value() default "";
-
     public String message() default "User with this email has already exist!";
     public Class<?>[] groups() default {};
     public Class<? extends Payload>[] payload() default {};

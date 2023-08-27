@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<Role,Long> {
     Optional<Role> findFirstByOrderByIdAsc();
+
+    Optional<Role> findByName(String name);
 }
