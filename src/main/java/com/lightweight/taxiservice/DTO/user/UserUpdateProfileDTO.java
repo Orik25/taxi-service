@@ -1,13 +1,19 @@
 package com.lightweight.taxiservice.DTO.user;
 
 import com.lightweight.taxiservice.validation.email.UniqueEmail;
+import com.lightweight.taxiservice.validation.email.UpdateUniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@UpdateUniqueEmail
 public class UserUpdateProfileDTO {
     private Long id;
 
+    private String globalError;
     @Email(message = "Not correct email")
     @NotBlank(message = "Email is mandatory")
     private String email;
@@ -86,5 +92,13 @@ public class UserUpdateProfileDTO {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getGlobalError() {
+        return globalError;
+    }
+
+    public void setGlobalError(String globalError) {
+        this.globalError = globalError;
     }
 }

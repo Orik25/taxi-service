@@ -1,6 +1,6 @@
 package com.lightweight.taxiservice.config;
 
-import com.lightweight.taxiservice.constants.RoleData;
+import com.lightweight.taxiservice.constant.RoleData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

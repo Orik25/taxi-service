@@ -58,7 +58,6 @@ public class ConverterUserDTO {
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setPhone(user.getPhone());
-        System.out.println(user.getRole().getName());
         updatedUser.setRoleName(user.getRole().getName());
 
         return updatedUser;

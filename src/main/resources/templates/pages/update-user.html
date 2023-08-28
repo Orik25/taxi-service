@@ -12,10 +12,10 @@
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
 <div class="container">
     <div id="loginbox" class="d-flex align-items-center justify-content-center">
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-5 col-sm-7">
             <div class="card border-warning">
                 <div class="card-header bg-warning text-black">
                     Update
@@ -28,10 +28,9 @@
                         <form action="#" th:action="@{/system/update-user/{id}(id=${user.id})}" th:object="${user}" method="post">
                             <input type="hidden" th:field = "*{id}">
                             <div class="form-group">
-                                <div class="alert alert-danger form-control mb-2" th:if="${#fields.hasErrors('email')}"
-                                     style="height: 30px;">
+                                <div class="alert alert-danger form-control mb-2 mt-3" th:if="${user.globalError}" style="height: 30px;">
                                     <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                                        <span th:errors="*{email}" class="error">is required</span>
+                                        <span th:text="${user.globalError}" class="error"></span>
                                     </div>
                                 </div>
                                 <div class="input-group mb-2 mt-2">
@@ -81,20 +80,21 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="alert alert-danger form-control mb-2 mt-3"
-                                     th:if="${#fields.hasErrors('roleName')}" style=" height: 30px;">
-                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                                        <span th:errors="*{roleName}" class="error">is required</span>
-                                    </div>
-                                </div>
-                                <div class="input-group mb-2 mt-2">
-
-                                    <input type="text" name="roleName" th:field="*{roleName}" placeholder="Role name"
-                                           class="form-control"/>
+<!--                                <div class="alert alert-danger form-control mb-2 mt-3"-->
+<!--                                     th:if="${#fields.hasErrors('roleName')}" style=" height: 30px;">-->
+<!--                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">-->
+<!--                                        <span th:errors="*{roleName}" class="error">is required</span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="input-group mb-2 mt-2 d-flex align-items-center justify-content-center">
+                                    <select name="roleName" th:field="*{roleName}" class="form-select" style="height: 30px; width:150px;">
+                                        <option th:value="ROLE_ADMIN" th:text="ADMIN" th:selected="${user.roleName == 'ROLE_ADMIN'}"></option>
+                                        <option th:value="ROLE_USER" th:text="USER" th:selected="${user.roleName == 'ROLE_USER'}"></option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-8">
+                            <div class="form-group d-flex align-items-center justify-content-center">
                                 <input type="submit" class="btn btn-warning" value="Update User">
                             </div>
                         </form>
