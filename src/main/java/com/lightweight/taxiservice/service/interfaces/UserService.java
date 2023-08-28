@@ -17,6 +17,5 @@ public interface UserService{
     void deleteById(Long id);
 
     User registerUser(UserRegistrationDTO user);
-
-    Optional<User> findByEmailWhereIdIsNot(Long id, String email);
+    public List<User> getAllUsersSorted(String sortField, String sortOrder) ;
 }

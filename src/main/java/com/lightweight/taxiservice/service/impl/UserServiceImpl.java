@@ -12,6 +12,7 @@ import com.lightweight.taxiservice.service.interfaces.RoleService;
 import com.lightweight.taxiservice.service.interfaces.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -107,8 +108,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmailWhereIdIsNot(Long id, String email) {
-        return userRepository.findByEmailWhereIdIsNot(id, email);
+    public List<User> getAllUsersSorted(String sortField, String sortOrder) {
+        Sort sort = Sort.by(sortField);
+        if ("desc".equals(sortOrder)) {
+            sort = sort.descending();
+        }
+        return userRepository.findAll(sort);
     }
 
     private void isDatabaseEmpty() {

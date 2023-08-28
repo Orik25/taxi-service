@@ -72,14 +72,41 @@
                                 <table class="table table-striped table-responsive-md">
                                     <thead>
                                     <tr>
-                                        <th>Email</th>
-                                        <th>First name</th>
-                                        <th>Last name</th>
-                                        <th>Phone</th>
-                                        <th>Role name</th>
+                                        <th>
+                                            <a class="text-dark" th:href="@{/system/users}" style="text-decoration: none;">Default sorting</a>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Email
+                                            <a class="text-warning" th:href="@{/system/users(sortField='email', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                            <a class="text-dark" th:href="@{/system/users(sortField='email', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                        </th>
+                                        <th>
+                                            First name
+                                            <a class="text-warning" th:href="@{/system/users(sortField='firstName', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                            <a class="text-dark" th:href="@{/system/users(sortField='firstName', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                        </th>
+                                        <th>
+                                            Last name
+                                            <a class="text-warning" th:href="@{/system/users(sortField='lastName', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                            <a class="text-dark" th:href="@{/system/users(sortField='lastName', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                        </th>
+                                        <th>
+                                            Phone
+                                            <a class="text-warning" th:href="@{/system/users(sortField='phone', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                            <a class="text-dark" th:href="@{/system/users(sortField='phone', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                        </th>
+                                        <th>
+                                            Role name
+                                            <a class="text-warning" th:href="@{/system/users(sortField='role.name', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                            <a class="text-dark" th:href="@{/system/users(sortField='role.name', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                        </th>
+
                                         <th>Edit</th>
                                         <th>Delete</th>
-                                    </tr>
+
+
                                     </thead>
                                     <tbody>
                                     <tr th:each="user : ${users}">
