@@ -41,8 +41,12 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
+    public String getUsers(Model model,
+                           @RequestParam(name = "sortField", defaultValue = "id") String sortField,
+                           @RequestParam(name = "sortOrder", defaultValue = "asc") String sortOrder) {
+        model.addAttribute("users", userService.getAllUsersSorted(sortField, sortOrder));
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortOrder", sortOrder);
         return "pages/list-users";
     }
 
@@ -50,6 +54,7 @@ public class AdminController {
     public String showUpdateUserForm(@PathVariable Long id,  Model model) {
         UserUpdateProfileDTO userDto =  converterUserDTO.convertToDTO(userService.findById(id));
         model.addAttribute("user", userDto);
+
         return "pages/update-user";
     }
 
