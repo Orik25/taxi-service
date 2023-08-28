@@ -1,10 +1,11 @@
 package com.lightweight.taxiservice.service.interfaces;
 
-import com.lightweight.taxiservice.DAO.UserRepository;
-import com.lightweight.taxiservice.entity.Car;
+import com.lightweight.taxiservice.DTO.user.UserRegistrationDTO;
+import com.lightweight.taxiservice.DTO.user.UserUpdateProfileDTO;
 import com.lightweight.taxiservice.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService{
     List<User> findAll();
@@ -12,8 +13,10 @@ public interface UserService{
     User findById(Long id);
     User findByEmail(String email);
     User save(User user);
-    User update(User user);
+    User update(Long id, UserUpdateProfileDTO userProfile);
     void deleteById(Long id);
 
-    User registerUser(User user);
+    User registerUser(UserRegistrationDTO user);
+
+    Optional<User> findByEmailWhereIdIsNot(Long id, String email);
 }

@@ -1,5 +1,6 @@
 package com.lightweight.taxiservice.controller;
 
+import com.lightweight.taxiservice.DTO.user.UserRegistrationDTO;
 import com.lightweight.taxiservice.entity.User;
 import com.lightweight.taxiservice.service.interfaces.UserService;
 import jakarta.validation.Valid;
@@ -25,13 +26,13 @@ public class RegistrationController {
 
     @GetMapping
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserRegistrationDTO());
         return "registration";
     }
 
 
     @PostMapping
-    public String registerUser(@Valid @ModelAttribute("user") User user,
+    public String registerUser(@Valid @ModelAttribute("user") UserRegistrationDTO user,
                                BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             return "registration";

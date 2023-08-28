@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Update User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container">
+    <div id="loginbox" class="d-flex align-items-center justify-content-center">
+        <div class="col-md-5 col-sm-7">
+            <div class="card border-warning">
+                <div class="card-header bg-warning text-black">
+                    Update
+                </div>
+
+                <div class="card-body">
+                    <div class="card-text">
+
+                        <!-- Update Form -->
+                        <form action="#" th:action="@{/system/update-user/{id}(id=${user.id})}" th:object="${user}" method="post">
+                            <input type="hidden" th:field = "*{id}">
+                            <div class="form-group">
+                                <div class="alert alert-danger form-control mb-2 mt-3" th:if="${user.globalError}" style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:text="${user.globalError}" class="error"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-2 mt-2">
+                                    <input type="text" th:field="*{email}" placeholder="Email"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="alert alert-danger form-control mb-2 mt-3"
+                                     th:if="${#fields.hasErrors('firstName')}" style=" height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{firstName}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-2 mt-2">
+                                    <input type="text" th:field="*{firstName}" placeholder="First Name"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="alert alert-danger form-control mb-2 mt-3"
+                                     th:if="${#fields.hasErrors('lastName')}" style=" height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{lastName}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-2 mt-2">
+                                    <input type="text" th:field="*{lastName}" placeholder="Last Name"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="alert alert-danger form-control mb-2 mt-3"
+                                     th:if="${#fields.hasErrors('phone')}" style=" height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{phone}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <div class="input-group mb-2 mt-2">
+                                    <input type="text" th:field="*{phone}" placeholder="Phone"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+<!--                                <div class="alert alert-danger form-control mb-2 mt-3"-->
+<!--                                     th:if="${#fields.hasErrors('roleName')}" style=" height: 30px;">-->
+<!--                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">-->
+<!--                                        <span th:errors="*{roleName}" class="error">is required</span>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="input-group mb-2 mt-2 d-flex align-items-center justify-content-center">
+                                    <select name="roleName" th:field="*{roleName}" class="form-select" style="height: 30px; width:150px;">
+                                        <option th:value="ROLE_ADMIN" th:text="ADMIN" th:selected="${user.roleName == 'ROLE_ADMIN'}"></option>
+                                        <option th:value="ROLE_USER" th:text="USER" th:selected="${user.roleName == 'ROLE_USER'}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group d-flex align-items-center justify-content-center">
+                                <input type="submit" class="btn btn-warning" value="Update User">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

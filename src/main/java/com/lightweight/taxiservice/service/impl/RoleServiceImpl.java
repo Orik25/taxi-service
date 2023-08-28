@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -57,6 +58,16 @@ public class RoleServiceImpl implements RoleService {
 
         roleRepository.deleteById(id);
         roleRepository.flush();
+    }
+
+    @Override
+    public Role findByName(String name) {
+        Optional<Role> optionalRole = roleRepository.findByName(name);
+        if (optionalRole.isEmpty()) {
+            throw new NoRoleFoundException("No role found with this name: " + name);
+        }
+
+        return optionalRole.get();
     }
 
     private void isDatabaseEmpty() {

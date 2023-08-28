@@ -1,4 +1,4 @@
-package com.lightweight.taxiservice.constants;
+package com.lightweight.taxiservice.constant;
 
 public enum RoleData {
     ADMIN("ADMIN"), USER("USER");

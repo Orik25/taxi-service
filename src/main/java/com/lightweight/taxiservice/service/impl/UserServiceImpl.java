@@ -1,8 +1,9 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.UserRepository;
-import com.lightweight.taxiservice.entity.Car;
-import com.lightweight.taxiservice.entity.Driver;
+import com.lightweight.taxiservice.DTO.user.ConverterUserDTO;
+import com.lightweight.taxiservice.DTO.user.UserRegistrationDTO;
+import com.lightweight.taxiservice.DTO.user.UserUpdateProfileDTO;
 import com.lightweight.taxiservice.entity.Role;
 import com.lightweight.taxiservice.entity.User;
 import com.lightweight.taxiservice.exception.NoUserFoundException;
@@ -22,12 +23,15 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RoleService roleService;
     private PasswordEncoder passwordEncoder;
+    private ConverterUserDTO userConverter;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService
+            , ConverterUserDTO userConverter) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
+        this.userConverter = userConverter;
     }
 
     @Override
@@ -70,12 +74,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
+    public User update(Long id, UserUpdateProfileDTO userProfile) {
         isDatabaseEmpty();
-        Long id = user.getId();
-        userRepository.findById(id)
-                .orElseThrow(() -> new NoUserFoundException("Impossible to update the User. User not found with id: " + id));
-        return userRepository.save(user);
+
+        User updatedUser = userConverter.convertToEntity(userProfile, findById(id));
+
+        return userRepository.save(updatedUser);
     }
 
     @Override
@@ -93,16 +97,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User registerUser(User user) {
+    public User registerUser(UserRegistrationDTO user) {
         boolean isPresent = userRepository.findByEmail(user.getEmail()).isPresent();
-        if (isPresent){
+        if (isPresent) {
             throw new IllegalArgumentException("The user with this email already exists");
         }
 
-        user.setRole(roleService.findById(2L));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(userConverter.convertToEntity(user));
+    }
 
-        return userRepository.save(user);
+    @Override
+    public Optional<User> findByEmailWhereIdIsNot(Long id, String email) {
+        return userRepository.findByEmailWhereIdIsNot(id, email);
     }
 
     private void isDatabaseEmpty() {
