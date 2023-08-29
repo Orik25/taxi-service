@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/system")
 public class AdminController {
@@ -56,6 +58,13 @@ public class AdminController {
         model.addAttribute("user", userDto);
 
         return "pages/update-user";
+    }
+    @GetMapping("/search-users")
+    public String searchUsersByLastName(@RequestParam(name = "searchLastName") String searchLastName,
+                                        Model model) {
+        List<User> users = userService.findByLastNameContainingIgnoreCase(searchLastName);
+        model.addAttribute("users", users);
+        return "pages/list-users";
     }
 
     @PostMapping("/update-user/{id}")

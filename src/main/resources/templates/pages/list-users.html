@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+
 </head>
 
 <body>
@@ -65,68 +67,89 @@
             <h3>Users List</h3>
             <div class="card">
                 <div class="card-body">
-                    <div th:switch="${users}" class="container my-3">
-                        <div class="col-md-12">
-                            <h2 th:case="null">No Students yet!</h2>
-                            <div th:case="*">
-                                <table class="table table-striped table-responsive-md">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            <a class="text-dark" th:href="@{/system/users}" style="text-decoration: none;">Default sorting</a>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            Email
-                                            <a class="text-warning" th:href="@{/system/users(sortField='email', sortOrder='asc')}" style="text-decoration: none;">▲</a>
-                                            <a class="text-dark" th:href="@{/system/users(sortField='email', sortOrder='desc')}" style="text-decoration: none;">▼</a>
-                                        </th>
-                                        <th>
-                                            First name
-                                            <a class="text-warning" th:href="@{/system/users(sortField='firstName', sortOrder='asc')}" style="text-decoration: none;">▲</a>
-                                            <a class="text-dark" th:href="@{/system/users(sortField='firstName', sortOrder='desc')}" style="text-decoration: none;">▼</a>
-                                        </th>
-                                        <th>
-                                            Last name
-                                            <a class="text-warning" th:href="@{/system/users(sortField='lastName', sortOrder='asc')}" style="text-decoration: none;">▲</a>
-                                            <a class="text-dark" th:href="@{/system/users(sortField='lastName', sortOrder='desc')}" style="text-decoration: none;">▼</a>
-                                        </th>
-                                        <th>
-                                            Phone
-                                            <a class="text-warning" th:href="@{/system/users(sortField='phone', sortOrder='asc')}" style="text-decoration: none;">▲</a>
-                                            <a class="text-dark" th:href="@{/system/users(sortField='phone', sortOrder='desc')}" style="text-decoration: none;">▼</a>
-                                        </th>
-                                        <th>
-                                            Role name
-                                            <a class="text-warning" th:href="@{/system/users(sortField='role.name', sortOrder='asc')}" style="text-decoration: none;">▲</a>
-                                            <a class="text-dark" th:href="@{/system/users(sortField='role.name', sortOrder='desc')}" style="text-decoration: none;">▼</a>
-                                        </th>
+                    <div th:fragment="userList">
 
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                            <div class="col-md-12">
 
 
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="user : ${users}">
-                                        <td th:text="${user.email}"></td>
-                                        <td th:text="${user.firstName}"></td>
-                                        <td th:text="${user.lastName}"></td>
-                                        <td th:text="${user.phone}"></td>
-                                        <td th:text="${user.role.getName()}"></td>
-                                        <td><a th:href="@{/system/update-user/{id}(id=${user.id})}"
-                                               class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a>
-                                        </td>
-                                        <td><a th:href="@{/system/delete-user/{id}(id=${user.id})}"
-                                               class="btn btn-warning"><i class="fas fa-user-times ml-2"
-                                                                          onclick="if(!(confirm('Are you sure?'))) return false"></i></a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                    <table id="usersTable" class="table table-striped table-responsive-md">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                <form th:action="@{/system/search-users}" method="get">
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" name="searchLastName" placeholder="Search by Last Name">
+                                                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                                    </div>
+                                                </form>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <a class="text-dark" th:href="@{/system/users}" style="text-decoration: none;">Default sorting</a>
+                                            </th>
+                                        </tr>
+
+
+
+                                                <tr>
+                                                    <th>
+                                                        Email
+                                                        <a class="text-warning" th:href="@{/system/users(sortField='email', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                                        <a class="text-dark" th:href="@{/system/users(sortField='email', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                                    </th>
+                                                    <th>
+                                                        First name
+                                                        <a class="text-warning" th:href="@{/system/users(sortField='firstName', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                                        <a class="text-dark" th:href="@{/system/users(sortField='firstName', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                                    </th>
+                                                    <th>
+                                                        Last name
+                                                        <a class="text-warning" th:href="@{/system/users(sortField='lastName', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                                        <a class="text-dark" th:href="@{/system/users(sortField='lastName', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                                    </th>
+                                                    <th>
+                                                        Phone
+                                                        <a class="text-warning" th:href="@{/system/users(sortField='phone', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                                        <a class="text-dark" th:href="@{/system/users(sortField='phone', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                                    </th>
+                                                    <th>
+                                                        Role name
+                                                        <a class="text-warning" th:href="@{/system/users(sortField='role.name', sortOrder='asc')}" style="text-decoration: none;">▲</a>
+                                                        <a class="text-dark" th:href="@{/system/users(sortField='role.name', sortOrder='desc')}" style="text-decoration: none;">▼</a>
+                                                    </th>
+
+                                                    <th>Edit</th>
+                                                    <th>Delete</th>
+                                                </tr>
+
+
+                                        </thead>
+                                        <tbody>
+                                        <div th:switch="${users.size()}" class="container my-3">
+                                            <h2 th:case="0">No Users found</h2>
+                                            <div th:case="*">
+                                                <tr th:each="user : ${users}">
+                                                    <td th:text="${user.email}"></td>
+                                                    <td th:text="${user.firstName}"></td>
+                                                    <td th:text="${user.lastName}"></td>
+                                                    <td th:text="${user.phone}"></td>
+                                                    <td th:text="${user.role.getName()}"></td>
+                                                    <td><a th:href="@{/system/update-user/{id}(id=${user.id})}"
+                                                           class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a>
+                                                    </td>
+                                                    <td><a th:href="@{/system/delete-user/{id}(id=${user.id})}"
+                                                           class="btn btn-warning"><i class="fas fa-user-times ml-2"
+                                                                                      onclick="if(!(confirm('Are you sure?'))) return false"></i></a>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                        </div>
+                                        </tbody>
+                                    </table>
+
                             </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

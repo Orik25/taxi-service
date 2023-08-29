@@ -116,6 +116,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(sort);
     }
 
+    @Override
+    public List<User> findByLastNameContainingIgnoreCase(String lastName) {
+
+        return userRepository.findUsersByLastNameContainingIgnoreCase(lastName);
+
+    }
+
     private void isDatabaseEmpty() {
         userRepository.findFirstByOrderByIdAsc()
                 .orElseThrow(() -> new NoUserFoundException("Data base has not any records of users"));

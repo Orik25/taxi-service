@@ -16,6 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findFirstByOrderByIdAsc();
 
-    @Query("SELECT dfs FROM User dfs WHERE dfs.email =:email AND dfs.id !=:id")
-    Optional<User> findByEmailWhereIdIsNot(@Param("id") Long id, @Param("email") String email);
+    List<User> findUsersByLastNameContainingIgnoreCase(String lastName);
 }
