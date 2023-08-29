@@ -17,5 +17,6 @@ public interface UserService{
     void deleteById(Long id);
 
     User registerUser(UserRegistrationDTO user);
-    public List<User> getAllUsersSorted(String sortField, String sortOrder) ;
+    public List<User> getAllUsersSorted(String sortField, String sortOrder);
+    List<User> findByLastNameContainingIgnoreCase(String lastName);
 }
