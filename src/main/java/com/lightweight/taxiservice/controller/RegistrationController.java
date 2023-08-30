@@ -38,7 +38,7 @@ public class RegistrationController {
             return "registration";
         } else {
             userService.registerUser(user);
-            return "redirect:/login";
+            return "redirect:/login?successRegister=true";
         }
     }
 }
