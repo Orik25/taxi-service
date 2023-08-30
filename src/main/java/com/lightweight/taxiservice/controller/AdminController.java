@@ -9,6 +9,9 @@ import com.lightweight.taxiservice.service.interfaces.RoleService;
 import com.lightweight.taxiservice.service.interfaces.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,9 +47,11 @@ public class AdminController {
 
     @GetMapping("/users")
     public String getUsers(Model model,
+                           @RequestParam(name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "size", defaultValue = "5") int size,
                            @RequestParam(name = "sortField", defaultValue = "id") String sortField,
                            @RequestParam(name = "sortOrder", defaultValue = "asc") String sortOrder) {
-        model.addAttribute("users", userService.getAllUsersSorted(sortField, sortOrder));
+        model.addAttribute("usersPage", userService.getAllUsersSorted(page,size,sortField, sortOrder));
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortOrder", sortOrder);
         return "pages/list-users";
@@ -60,10 +65,14 @@ public class AdminController {
         return "pages/update-user";
     }
     @GetMapping("/search-users")
-    public String searchUsersByLastName(@RequestParam(name = "searchLastName") String searchLastName,
+    public String searchUsersByLastName(@RequestParam(name = "searchLastName" ) String searchLastName,
+                                        @RequestParam(name = "page", defaultValue = "0") int page,
+                                        @RequestParam(name = "size", defaultValue = "5") int size,
                                         Model model) {
-        List<User> users = userService.findByLastNameContainingIgnoreCase(searchLastName);
-        model.addAttribute("users", users);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> usersPage = userService.findByLastNameContainingIgnoreCase(searchLastName, pageable);
+        model.addAttribute("searchLastName",searchLastName);
+        model.addAttribute("usersPage", usersPage);
         return "pages/list-users";
     }
 

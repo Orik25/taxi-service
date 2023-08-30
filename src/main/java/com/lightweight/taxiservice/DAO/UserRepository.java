@@ -1,6 +1,8 @@
 package com.lightweight.taxiservice.DAO;
 
 import com.lightweight.taxiservice.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +18,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findFirstByOrderByIdAsc();
 
-    List<User> findUsersByLastNameContainingIgnoreCase(String lastName);
+    Page<User> findUsersByLastNameContainingIgnoreCase(String lastName, Pageable pageable);
 }

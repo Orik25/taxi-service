@@ -12,6 +12,9 @@ import com.lightweight.taxiservice.service.interfaces.RoleService;
 import com.lightweight.taxiservice.service.interfaces.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -108,19 +111,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsersSorted(String sortField, String sortOrder) {
+    public Page<User> getAllUsersSorted(int page, int size, String sortField, String sortOrder) {
         Sort sort = Sort.by(sortField);
         if ("desc".equals(sortOrder)) {
             sort = sort.descending();
         }
-        return userRepository.findAll(sort);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        return userRepository.findAll(pageRequest);
     }
 
     @Override
-    public List<User> findByLastNameContainingIgnoreCase(String lastName) {
-
-        return userRepository.findUsersByLastNameContainingIgnoreCase(lastName);
-
+    public Page<User> findByLastNameContainingIgnoreCase(String lastName, Pageable pageable) {
+        return userRepository.findUsersByLastNameContainingIgnoreCase(lastName,pageable);
     }
 
     private void isDatabaseEmpty() {
