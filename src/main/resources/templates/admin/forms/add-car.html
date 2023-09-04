@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Update User</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container">
+  <div id="loginbox" class="d-flex align-items-center justify-content-center">
+    <div class="col-md-7 col-sm-9">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-black">
+          Add
+        </div>
+
+        <div class="card-body">
+          <div class="card-text">
+
+            <!-- Update Form -->
+            <form action="#" th:action="@{/system/add-car}" th:object="${car}" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="brand">Brand:</label>
+                    <div class="alert alert-danger form-control"
+                         th:if="${#fields.hasErrors('brand')}" style=" height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{brand}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" th:field="*{brand}" id="brand" placeholder="Brand" class="form-control"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <label class="">Year:</label>
+                    <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('year')}" style="height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{year}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <select th:field="*{year}" id="year" class="form-control">
+                      <option value="">Select Year</option>
+                      <option th:each="yearOption : ${availableYears}" th:value="${yearOption}" th:text="${yearOption}"></option>
+                    </select>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="brand">Driver:</label>
+                    <div class="input-group mb-2">
+                      <select th:field="${car.driver.id}" id="driver" class="form-control">
+                        <option th:value="${car.driver.id}">Choose a driver</option>
+                        <option th:each="freeDriver : ${availableDrivers}" th:value="${freeDriver.id}" th:text="${freeDriver.firstName} + ' ' + ${freeDriver.lastName}"></option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="brand">Model:</label>
+                    <div class="alert alert-danger form-control"
+                         th:if="${#fields.hasErrors('model')}" style=" height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{model}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" th:field="*{model}" id="model" placeholder="Model" class="form-control"/>
+                    </div>
+
+
+                  </div>
+
+                  <div class="form-group">
+                    <label for="brand">Capacity:</label>
+                    <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('capacity')}" style="height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{capacity}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <select th:field="*{capacity}" id="capacity" class="form-control">
+                      <option th:value="*{capacity}">Choose a capacity</option>
+                      <option th:each="capacityFromList : ${availableCapacity}" th:value="${capacityFromList}" th:text="${capacityFromList}"></option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="brand">Status:</label>
+                    <select name="status" th:field="*{status}" id="status" class="form-control">
+                      <option th:value="inactive" th:text="Inactive" th:selected="${car.status == 'inactive'}"></option>
+                      <option th:value="available" th:text="Available" th:selected="${car.status == 'available'}"></option>
+                      <option th:value="on_trip" th:text="On_trip" th:selected="${car.status == 'on_trip'}"></option>
+                    </select>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-7 mx-auto">
+                <div class="alert alert-danger form-control"
+                     th:if="${#fields.hasErrors('category')}" style=" height: 30px;">
+                  <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                    <span th:errors="*{category}" class="error">is required</span>
+                  </div>
+                </div>
+                <label for="brand">Category:</label>
+                <div class="input-group mb-2">
+
+                  <input type="text" th:field="*{category}" id="category" placeholder="Category" class="form-control"/>
+                </div>
+
+              </div>
+
+              <div class="form-group d-flex align-items-center justify-content-center">
+                <input type="submit" class="btn btn-warning" value="Add Car">
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

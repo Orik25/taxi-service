@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class RoleController {
+public class RoleRESTController {
     private RoleService roleService;
 
     @Autowired
-    public RoleController(RoleService roleService) {
+    public RoleRESTController(RoleService roleService) {
         this.roleService = roleService;
     }
 

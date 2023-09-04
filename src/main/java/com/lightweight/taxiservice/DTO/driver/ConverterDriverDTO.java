@@ -64,4 +64,20 @@ public class ConverterDriverDTO {
 
         return newDriver;
     }
+
+    public List<DriverForUpdateCarDTO> convertToListDTOs(List<Driver> drivers){
+        List<DriverForUpdateCarDTO> driverForUpdateCarList = new ArrayList<>();
+        for (Driver driver:drivers) {
+            driverForUpdateCarList.add(convertToDTO(driver));
+        }
+        return driverForUpdateCarList;
+    }
+
+    private DriverForUpdateCarDTO convertToDTO(Driver driver){
+        DriverForUpdateCarDTO newDriver = new DriverForUpdateCarDTO();
+        newDriver.setId(driver.getId());
+        newDriver.setFirstName(driver.getFirstName());
+        newDriver.setLastName(driver.getLastName());
+        return newDriver;
+    }
 }

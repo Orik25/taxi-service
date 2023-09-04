@@ -1,5 +1,6 @@
 package com.lightweight.taxiservice.controller.RESTcontroller;
 
+import com.lightweight.taxiservice.DTO.car.CarUpdateDTO;
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.service.interfaces.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,10 @@ import java.util.List;
 
 
 @RestController
-public class CarController {
+public class CarRESTController {
     private CarService carService;
     @Autowired
-    public CarController(CarService carService) {
+    public CarRESTController(CarService carService) {
         this.carService = carService;
     }
 
@@ -42,9 +43,8 @@ public class CarController {
     }
 
     @PutMapping("/cars/{carId}")
-    public Car updateCar(@PathVariable Long carId, @RequestBody Car updatedCar) {
-        updatedCar.setId(carId);
-        return carService.update(updatedCar);
+    public Car updateCar(@PathVariable Long carId, @RequestBody CarUpdateDTO updatedCar) {
+        return carService.update(carId, updatedCar);
     }
 
     @DeleteMapping("/cars/{carId}")

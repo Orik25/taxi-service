@@ -1,8 +1,6 @@
 package com.lightweight.taxiservice.DTO.car;
 
-import com.lightweight.taxiservice.DTO.order.CoordinateDTO;
-
-public class CarDTO {
+public class CarForNewDriverDTO {
     private String brand;
     private String model;
     private int year;

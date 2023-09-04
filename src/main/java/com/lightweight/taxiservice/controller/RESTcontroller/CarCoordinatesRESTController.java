@@ -1,20 +1,18 @@
 package com.lightweight.taxiservice.controller.RESTcontroller;
 
-import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.CarCoordinates;
 import com.lightweight.taxiservice.service.interfaces.CarCoordinatesService;
-import com.lightweight.taxiservice.service.interfaces.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class CarCoordinatesController {
+public class CarCoordinatesRESTController {
     private CarCoordinatesService carCoordinatesService;
 
     @Autowired
-    public CarCoordinatesController(CarCoordinatesService carCoordinatesService) {
+    public CarCoordinatesRESTController(CarCoordinatesService carCoordinatesService) {
         this.carCoordinatesService = carCoordinatesService;
     }
 

@@ -12,13 +12,13 @@ import java.util.List;
 
 
 @RestController
-public class DriverController {
+public class DriverRESTController {
     private DriverService driverService;
     private ConverterDriverDTO converterDriverDTO;
 
     @Autowired
-    public DriverController(DriverService driverService,
-                            ConverterDriverDTO converterDriverDTO) {
+    public DriverRESTController(DriverService driverService,
+                                ConverterDriverDTO converterDriverDTO) {
         this.driverService = driverService;
         this.converterDriverDTO = converterDriverDTO;
     }

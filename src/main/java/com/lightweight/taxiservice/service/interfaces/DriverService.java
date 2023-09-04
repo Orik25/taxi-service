@@ -10,4 +10,5 @@ public interface DriverService {
     Driver save(Driver driver);
     Driver update(Driver driver);
     void deleteById(Long id);
+    List<Driver> findDriversWithoutCars();
 }

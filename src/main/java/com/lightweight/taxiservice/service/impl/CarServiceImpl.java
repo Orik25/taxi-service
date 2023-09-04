@@ -1,6 +1,8 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.CarRepository;
+import com.lightweight.taxiservice.DTO.car.CarUpdateDTO;
+import com.lightweight.taxiservice.DTO.car.ConverterCarDTO;
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.exception.*;
@@ -8,6 +10,10 @@ import com.lightweight.taxiservice.service.interfaces.CarService;
 import jakarta.persistence.Transient;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +21,12 @@ import java.util.List;
 @Service
 public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
+    private ConverterCarDTO converterCarDTO;
 
     @Autowired
-    public CarServiceImpl(CarRepository carRepository) {
+    public CarServiceImpl(CarRepository carRepository, ConverterCarDTO converterCarDTO) {
         this.carRepository = carRepository;
+        this.converterCarDTO = converterCarDTO;
     }
 
     @Override
@@ -49,12 +57,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car update(Car car) {
+    public Car update(Long id, CarUpdateDTO updateCarDTO) {
         isDatabaseEmpty();
-        Long id = car.getId();
-        carRepository.findById(id)
-                .orElseThrow(()->new NoCarFoundException("Impossible to update the Car. Car not found with id: " + id));
-        return carRepository.save(car);
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new NoCarFoundException("Impossible to update the Car. Car not found with id: " + id));
+        Car updatedCar = converterCarDTO.convertToEntity(updateCarDTO, car);
+
+        return carRepository.save(updatedCar);
     }
 
     @Override
@@ -66,7 +75,7 @@ public class CarServiceImpl implements CarService {
     public void deleteById(Long id) {
         isDatabaseEmpty();
         Car car = carRepository.findById(id)
-                .orElseThrow(()->new NoCarFoundException("Impossible to delete the Car. Car not found with id: " + id));
+                .orElseThrow(() -> new NoCarFoundException("Impossible to delete the Car. Car not found with id: " + id));
 
         Driver driver = car.getDriver();
         if (driver != null) {
@@ -83,6 +92,21 @@ public class CarServiceImpl implements CarService {
         } else {
             throw new NoAvailableCarsException("There are no available cars for order");
         }
+    }
+
+    @Override
+    public Page<Car> getAllCarsSorted(int page, int size, String sortField, String sortOrder) {
+        Sort sort = Sort.by(sortField);
+        if ("desc".equals(sortOrder)) {
+            sort = sort.descending();
+        }
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        return carRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Page<Car> findCarsByModelContainingIgnoreCase(String model, Pageable pageable) {
+        return carRepository.findCarsByModelContainingIgnoreCase(model, pageable);
     }
 
     private void isDatabaseEmpty() {

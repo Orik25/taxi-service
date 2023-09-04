@@ -55,6 +55,10 @@ public class Car {
         this.capacity = capacity;
     }
 
+    public Car(CarCoordinates carCoordinates) {
+        this.carCoordinates = carCoordinates;
+    }
+
     public Long getId() {
         return id;
     }

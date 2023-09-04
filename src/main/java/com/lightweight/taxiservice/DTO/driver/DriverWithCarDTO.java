@@ -1,13 +1,13 @@
 package com.lightweight.taxiservice.DTO.driver;
 
-import com.lightweight.taxiservice.DTO.car.CarDTO;
+import com.lightweight.taxiservice.DTO.car.CarForNewDriverDTO;
 
 public class DriverWithCarDTO {
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
-    private CarDTO car;
+    private CarForNewDriverDTO car;
 
     public String getFirstName() {
         return firstName;
@@ -41,11 +41,11 @@ public class DriverWithCarDTO {
         this.email = email;
     }
 
-    public CarDTO getCar() {
+    public CarForNewDriverDTO getCar() {
         return car;
     }
 
-    public void setCar(CarDTO car) {
+    public void setCar(CarForNewDriverDTO car) {
         this.car = car;
     }
 }
