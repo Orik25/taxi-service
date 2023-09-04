@@ -68,6 +68,11 @@ public class DriverServiceImpl implements DriverService {
         driverRepository.delete(driver);
     }
 
+    @Override
+    public List<Driver> findDriversWithoutCars() {
+        return driverRepository.findDriversWithoutCars();
+    }
+
     private void isDatabaseEmpty() {
         driverRepository.findFirstByOrderByIdAsc()
                 .orElseThrow(() -> new NoDriverFoundException("Data base has not any records of drivers"));

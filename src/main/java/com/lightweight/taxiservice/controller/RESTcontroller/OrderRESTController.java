@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class OrderController {
+public class OrderRESTController {
     private OrderService orderService;
     private ConverterOrderDTO converterOrderDTO;
 
     @Autowired
-    public OrderController(OrderService orderService, ConverterOrderDTO converterOrderDTO) {
+    public OrderRESTController(OrderService orderService, ConverterOrderDTO converterOrderDTO) {
         this.orderService = orderService;
         this.converterOrderDTO = converterOrderDTO;
     }

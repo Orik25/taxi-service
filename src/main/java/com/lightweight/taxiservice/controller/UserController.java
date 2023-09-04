@@ -15,34 +15,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/system")
-public class AdminController {
+public class UserController {
     private UserService userService;
-    private RoleService roleService;
-    private CarService carService;
-    private DriverService driverService;
     private ConverterUserDTO converterUserDTO;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService,
-                           CarService carService, DriverService driverService,
-                           ConverterUserDTO converterUserDTO) {
+    public UserController(UserService userService,
+                          ConverterUserDTO converterUserDTO) {
         this.userService = userService;
-        this.roleService = roleService;
-        this.carService = carService;
-        this.driverService = driverService;
         this.converterUserDTO = converterUserDTO;
     }
 
     @GetMapping
     public String systemPage() {
-        return "/pages/system";
+        return "/admin/system";
     }
 
     @GetMapping("/users")
@@ -54,7 +44,7 @@ public class AdminController {
         model.addAttribute("usersPage", userService.getAllUsersSorted(page,size,sortField, sortOrder));
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortOrder", sortOrder);
-        return "pages/list-users";
+        return "admin/list-users";
     }
 
     @GetMapping("/update-user/{id}")
@@ -62,7 +52,7 @@ public class AdminController {
         UserUpdateProfileDTO userDto =  converterUserDTO.convertToDTO(userService.findById(id));
         model.addAttribute("user", userDto);
 
-        return "pages/update-user";
+        return "admin/forms/update-user";
     }
     @GetMapping("/search-users")
     public String searchUsersByLastName(@RequestParam(name = "searchLastName" ) String searchLastName,
@@ -73,7 +63,7 @@ public class AdminController {
         Page<User> usersPage = userService.findByLastNameContainingIgnoreCase(searchLastName, pageable);
         model.addAttribute("searchLastName",searchLastName);
         model.addAttribute("usersPage", usersPage);
-        return "pages/list-users";
+        return "admin/list-users";
     }
 
     @PostMapping("/update-user/{id}")
@@ -86,7 +76,7 @@ public class AdminController {
                 userProfile.setGlobalError(result.getGlobalError().getDefaultMessage());
             }
             model.addAttribute("user", userProfile);
-            return "pages/update-user";
+            return "admin/forms/update-user";
         }
 
         userService.update(id, userProfile);
@@ -99,21 +89,5 @@ public class AdminController {
         return "redirect:/system/users";
     }
 
-    @GetMapping("/roles")
-    public String getRoles(Model model) {
-        model.addAttribute("roles", roleService.findAll());
-        return "admin/list-roles";
-    }
 
-    @GetMapping("/cars")
-    public String getCars(Model model) {
-        model.addAttribute("cars", carService.findAll());
-        return "admin/list-cars";
-    }
-
-    @GetMapping("/drivers")
-    public String getDrivers(Model model) {
-        model.addAttribute("drivers", driverService.findAll());
-        return "admin/list-drivers";
-    }
 }

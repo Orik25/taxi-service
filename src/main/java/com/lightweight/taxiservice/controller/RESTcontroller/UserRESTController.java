@@ -1,21 +1,18 @@
 package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import com.lightweight.taxiservice.DTO.user.UserUpdateProfileDTO;
-import com.lightweight.taxiservice.exception.NoUserFoundException;
-import org.springframework.ui.Model;
 import com.lightweight.taxiservice.entity.User;
 import com.lightweight.taxiservice.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public class UserController {
+public class UserRESTController {
     private UserService userService;
     @Autowired
-    public UserController(UserService userService) {
+    public UserRESTController(UserService userService) {
         this.userService = userService;
     }
 
