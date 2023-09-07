@@ -1,15 +1,15 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.CarRepository;
+import com.lightweight.taxiservice.DTO.car.CarForUpdateDriverDTO;
 import com.lightweight.taxiservice.DTO.car.CarUpdateDTO;
 import com.lightweight.taxiservice.DTO.car.ConverterCarDTO;
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.exception.*;
 import com.lightweight.taxiservice.service.interfaces.CarService;
-import jakarta.persistence.Transient;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -107,6 +107,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Page<Car> findCarsByModelContainingIgnoreCase(String model, Pageable pageable) {
         return carRepository.findCarsByModelContainingIgnoreCase(model, pageable);
+    }
+
+    @Override
+    public List<Car> findCarsWithoutDrivers() {
+        return carRepository.findCarsWithoutDrivers();
     }
 
     private void isDatabaseEmpty() {

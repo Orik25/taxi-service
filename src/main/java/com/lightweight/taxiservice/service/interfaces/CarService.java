@@ -1,5 +1,6 @@
 package com.lightweight.taxiservice.service.interfaces;
 
+import com.lightweight.taxiservice.DTO.car.CarForUpdateDriverDTO;
 import com.lightweight.taxiservice.DTO.car.CarUpdateDTO;
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.Driver;
@@ -20,4 +21,6 @@ public interface CarService {
     Page<Car> getAllCarsSorted(int page, int size, String sortField, String sortOrder);
     List<Car> getAvailableCarsForOrder();
     Page<Car> findCarsByModelContainingIgnoreCase(String model, Pageable pageable);
+
+    List<Car> findCarsWithoutDrivers();
 }
