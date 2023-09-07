@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Update Driver</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container">
+  <div id="loginbox" class="d-flex align-items-center justify-content-center">
+    <div class="col-md-7 col-sm-9">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-black">
+          Update
+        </div>
+
+        <div class="card-body">
+          <div class="card-text">
+
+            <!-- Update Form -->
+            <form action="#" th:action="@{/system/update-driver/{id}(id=${driver.id})}" th:object="${driver}" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="hidden" th:field="*{id}"/>
+
+                  <div class="form-group">
+
+                    <label for="firstName">First name:</label>
+                    <div class="alert alert-danger form-control"
+                         th:if="${#fields.hasErrors('firstName')}" style=" height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{firstName}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" th:field="*{firstName}" id="firstName" placeholder="First name" class="form-control"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <label for="lastName">Last name:</label>
+                    <div class="alert alert-danger form-control"
+                         th:if="${#fields.hasErrors('lastName')}" style=" height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{lastName}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last name" class="form-control"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <label for="phone">Phone:</label>
+                    <div class="alert alert-danger form-control"
+                         th:if="${#fields.hasErrors('phone')}" style=" height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:errors="*{phone}" class="error">is required</span>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" th:field="*{phone}" id="phone" placeholder="Phone" class="form-control"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <label for="email">Email:</label>
+                    <div class="alert alert-danger form-control mb-2 mt-3" th:if="${driver.globalError}" style="height: 30px;">
+                      <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                        <span th:text="${driver.globalError}" class="error"></span>
+                      </div>
+                    </div>
+                    <div class="input-group mb-2">
+                      <input type="text" th:field="*{email}" id="email" placeholder="Email" class="form-control"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+
+                    <label for="car" class="">Car:</label>
+                    <div class="input-group mb-2">
+                      <select th:field="${driver.car.id}" id="car" class="form-control">
+                        <option th:value="${driver.car.id}" th:text="${driver.car.model != null ? driver.car.brand + ' ' + driver.car.model : 'Choose a car'}">Choose a car</option>
+                        <div th:if="${driver.car.id}">
+                          <option th:value="${null}">Delete Car</option>
+                        </div>
+
+                        <option th:each="freeCar : ${availableCars}" th:value="${freeCar.id}" th:text="${freeCar.brand} + ' ' + ${freeCar.model}"></option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group d-flex align-items-center justify-content-center">
+                <input type="submit" class="btn btn-warning" value="Update Driver">
+              </div>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

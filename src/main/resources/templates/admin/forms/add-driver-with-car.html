@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Update Driver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container">
+    <div id="loginbox" class="d-flex align-items-center justify-content-center">
+        <div class="card border-warning col-md-9 col-sm-12" style="border: 1px solid #dee2e6;">
+            <div class="card-header bg-warning text-black">
+                Add new Driver without Car
+            </div>
+
+            <div class="card-body">
+                <form action="#" th:action="@{/system/add-driver-with-car}" th:object="${driver}" method="post">
+                <div class="row">
+                    <!-- Перший стовпець (Driver) -->
+                    <div class="col-md-6">
+                        <div class="card-text">
+                            <!-- Поля для водія -->
+                            <div class="form-group">
+                                <label for="firstName">First name:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('firstName')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{firstName}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{firstName}" id="firstName" placeholder="First name"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Last name:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('lastName')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{lastName}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last name"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('phone')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{phone}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{phone}" id="phone" placeholder="Phone"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('email')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{email}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{email}" id="email" placeholder="Email"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Другий стовпець (Car) -->
+                    <div class="col-md-6">
+                        <div class="card-text">
+                            <!-- Поля для машини -->
+                            <div class="form-group">
+                                <label for="brand">Brand:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('car.brand')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{car.brand}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{car.brand}" id="brand" placeholder="Brand"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="year">Year:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('car.year')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{car.year}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <select th:field="*{car.year}" id="year" class="form-control">
+                                    <option th:value="${null}">Select Year</option>
+                                    <option th:each="yearOption : ${availableYears}" th:value="${yearOption}"
+                                            th:text="${yearOption}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="model">Model:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('car.model')}"
+                                     style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{car.model}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{car.model}" id="model" placeholder="Model"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="capacity">Capacity:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control"
+                                     th:if="${#fields.hasErrors('car.capacity')}" style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{car.capacity}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <select th:field="*{car.capacity}" id="capacity" class="form-control">
+                                    <option th:value="*{car.capacity}">Choose a capacity</option>
+                                    <option th:each="capacityFromList : ${availableCapacity}"
+                                            th:value="${capacityFromList}" th:text="${capacityFromList}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select name="status" th:field="*{car.status}" id="status" class="form-control">
+                                    <option th:value="inactive" th:text="Inactive"
+                                            th:selected="${driver.car.status == 'inactive'}"></option>
+                                    <option th:value="available" th:text="Available"
+                                            th:selected="${driver.car.status == 'available'}"></option>
+                                    <option th:value="on_trip" th:text="On_trip"
+                                            th:selected="${driver.car.status == 'on_trip'}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Category:</label>
+                                <!-- Повідомлення про помилку -->
+                                <div class="alert alert-danger form-control"
+                                     th:if="${#fields.hasErrors('car.category')}" style="height: 30px;">
+                                    <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
+                                        <span th:errors="*{car.category}" class="error">is required</span>
+                                    </div>
+                                </div>
+                                <input type="text" th:field="*{car.category}" id="category" placeholder="Category"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка "Add Driver" -->
+                <div class="form-group d-flex align-items-center justify-content-center">
+                    <input type="submit" class="btn btn-warning" value="Add Driver"/>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

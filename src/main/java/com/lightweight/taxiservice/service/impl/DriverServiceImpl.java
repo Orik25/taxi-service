@@ -1,16 +1,19 @@
 package com.lightweight.taxiservice.service.impl;
 
 import com.lightweight.taxiservice.DAO.DriverRepository;
+import com.lightweight.taxiservice.DTO.driver.ConverterDriverDTO;
+import com.lightweight.taxiservice.DTO.driver.DriverUpdateDTO;
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.Driver;
-import com.lightweight.taxiservice.exception.NoCarFoundException;
 import com.lightweight.taxiservice.exception.NoDriverFoundException;
 import com.lightweight.taxiservice.exception.NoDriversFoundException;
 import com.lightweight.taxiservice.service.interfaces.DriverService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Transient;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +21,13 @@ import java.util.List;
 @Service
 public class DriverServiceImpl implements DriverService {
     private DriverRepository driverRepository;
+    private ConverterDriverDTO converterDriverDTO;
 
     @Autowired
-    public DriverServiceImpl(DriverRepository driverRepository) {
+    public DriverServiceImpl(DriverRepository driverRepository,
+                             ConverterDriverDTO converterDriverDTO) {
         this.driverRepository = driverRepository;
+        this.converterDriverDTO = converterDriverDTO;
     }
 
     @Override
@@ -47,13 +53,15 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Driver update(Driver driver) {
+    public Driver update(Long id, DriverUpdateDTO updateDriverDTO) {
         isDatabaseEmpty();
-        Long id = driver.getId();
-        driverRepository.findById(id)
+        Driver driver = driverRepository.findById(id)
                 .orElseThrow(() -> new NoDriverFoundException("Impossible to update the Driver. Driver not found with id: " + id));
-        return driverRepository.save(driver);
+        Driver updatedDriver = converterDriverDTO.convertToEntity(updateDriverDTO, driver);
+
+        return driverRepository.save(updatedDriver);
     }
+
 
     @Override
     public void deleteById(Long id) {
@@ -71,6 +79,23 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public List<Driver> findDriversWithoutCars() {
         return driverRepository.findDriversWithoutCars();
+    }
+
+    @Override
+    public Page<Driver> getAllDriversSorted(int page, int size, String sortField, String sortOrder) {
+        Sort sort = Sort.by(sortField);
+
+        if ("desc".equals(sortOrder)) {
+            sort = sort.descending();
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        return driverRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Page<Driver> findDriversByLastNameContainingIgnoreCase(String model, Pageable pageable) {
+        return driverRepository.findDriversByLastNameContainingIgnoreCase(model, pageable);
     }
 
     private void isDatabaseEmpty() {

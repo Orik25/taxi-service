@@ -1,8 +1,11 @@
 package com.lightweight.taxiservice.DTO.car;
 
+import com.lightweight.taxiservice.DAO.DriverRepository;
 import com.lightweight.taxiservice.DTO.driver.DriverForUpdateCarDTO;
 import com.lightweight.taxiservice.entity.Car;
 import com.lightweight.taxiservice.entity.CarCoordinates;
+import com.lightweight.taxiservice.exception.NoCarFoundException;
+import com.lightweight.taxiservice.exception.NoDriverFoundException;
 import com.lightweight.taxiservice.service.interfaces.CarCoordinatesService;
 import com.lightweight.taxiservice.service.interfaces.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +13,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConverterCarDTO {
-    private DriverService driverService;
+    private DriverRepository driverRepository;
     private CarCoordinatesService carCoordinatesService;
 
     @Autowired
-    public ConverterCarDTO(DriverService driverService,CarCoordinatesService carCoordinatesService) {
-        this.driverService = driverService;
+    public ConverterCarDTO(DriverRepository driverRepository,CarCoordinatesService carCoordinatesService) {
+        this.driverRepository = driverRepository;
         this.carCoordinatesService = carCoordinatesService;
     }
 
@@ -28,7 +31,8 @@ public class ConverterCarDTO {
         car.setCapacity(carUpdateDTO.getCapacity());
 
         if(carUpdateDTO.getDriver().getId() != null){
-            car.setDriver(driverService.findById(carUpdateDTO.getDriver().getId()));
+            car.setDriver(driverRepository.findById(carUpdateDTO.getDriver().getId()).orElseThrow(() ->
+                    new NoDriverFoundException("Driver not found")));
         }
         else{
             car.setDriver(null);
@@ -51,7 +55,8 @@ public class ConverterCarDTO {
         newCar.setCapacity(car.getCapacity());
 
         if(car.getDriver().getId() != null){
-            newCar.setDriver(driverService.findById(car.getDriver().getId()));
+            newCar.setDriver(driverRepository.findById(car.getDriver().getId()).orElseThrow(() ->
+                    new NoDriverFoundException("Driver not found")));
         }
         else{
             newCar.setDriver(null);

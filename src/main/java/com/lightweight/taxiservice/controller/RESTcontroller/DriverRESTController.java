@@ -1,6 +1,7 @@
 package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import com.lightweight.taxiservice.DTO.driver.ConverterDriverDTO;
+import com.lightweight.taxiservice.DTO.driver.DriverUpdateDTO;
 import com.lightweight.taxiservice.DTO.driver.DriverWithCarDTO;
 import com.lightweight.taxiservice.DTO.driver.DriverWithOutCarDTO;
 import com.lightweight.taxiservice.entity.Driver;
@@ -46,9 +47,9 @@ public class DriverRESTController {
     }
 
     @PutMapping("/drivers/{driverId}")
-    public Driver updateDriver(@PathVariable Long driverId, @RequestBody Driver updatedDriver) {
+    public Driver updateDriver(@PathVariable Long driverId, @RequestBody DriverUpdateDTO updatedDriver) {
         updatedDriver.setId(driverId);
-        return driverService.update(updatedDriver);
+        return driverService.update(driverId, updatedDriver);
     }
 
     @DeleteMapping("/drivers/{driverId}")
