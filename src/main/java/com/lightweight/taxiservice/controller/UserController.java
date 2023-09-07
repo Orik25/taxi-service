@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,27 +43,28 @@ public class UserController {
                            @RequestParam(name = "size", defaultValue = "5") int size,
                            @RequestParam(name = "sortField", defaultValue = "id") String sortField,
                            @RequestParam(name = "sortOrder", defaultValue = "asc") String sortOrder) {
-        model.addAttribute("usersPage", userService.getAllUsersSorted(page,size,sortField, sortOrder));
+        model.addAttribute("usersPage", userService.getAllUsersSorted(page, size, sortField, sortOrder));
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortOrder", sortOrder);
         return "admin/list-users";
     }
 
     @GetMapping("/update-user/{id}")
-    public String showUpdateUserForm(@PathVariable Long id,  Model model) {
-        UserUpdateProfileDTO userDto =  converterUserDTO.convertToDTO(userService.findById(id));
+    public String showUpdateUserForm(@PathVariable Long id, Model model) {
+        UserUpdateProfileDTO userDto = converterUserDTO.convertToDTO(userService.findById(id));
         model.addAttribute("user", userDto);
 
         return "admin/forms/update-user";
     }
+
     @GetMapping("/search-users")
-    public String searchUsersByLastName(@RequestParam(name = "searchLastName" ) String searchLastName,
+    public String searchUsersByLastName(@RequestParam(name = "searchLastName") String searchLastName,
                                         @RequestParam(name = "page", defaultValue = "0") int page,
                                         @RequestParam(name = "size", defaultValue = "5") int size,
                                         Model model) {
         Pageable pageable = PageRequest.of(page, size);
         Page<User> usersPage = userService.findByLastNameContainingIgnoreCase(searchLastName, pageable);
-        model.addAttribute("searchLastName",searchLastName);
+        model.addAttribute("searchLastName", searchLastName);
         model.addAttribute("usersPage", usersPage);
         return "admin/list-users";
     }
@@ -69,7 +72,7 @@ public class UserController {
     @PostMapping("/update-user/{id}")
     public String updateUser(@PathVariable Long id,
                              @Valid @ModelAttribute("user") UserUpdateProfileDTO userProfile,
-                             BindingResult result,  Model model) {
+                             BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             if (result.hasGlobalErrors()) {
@@ -90,4 +93,13 @@ public class UserController {
     }
 
 
+    @GetMapping("/profile")
+    public String profilePage(Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User admin = userService.findByEmail(userDetails.getUsername());
+
+        model.addAttribute("admin", admin);
+
+        return "/admin/profile-admin";
+    }
 }
