@@ -19,5 +19,5 @@ public interface DriverService {
 
     Page<Driver> getAllDriversSorted(int page, int size, String sortField, String sortOrder);
 
-    Page<Driver> findDriversByLastNameContainingIgnoreCase(String model, Pageable pageable);
+    Page<Driver> findByFieldContainingIgnoreCase(String fieldName, String searchValue, Pageable pageable);
 }

@@ -59,14 +59,16 @@ public class CarController {
         return "admin/list-cars";
     }
     @GetMapping("/search-cars")
-    public String searchCarsByLastName(@RequestParam(name = "searchModel" ) String searchModel,
+    public String searchCarsByLastName(@RequestParam(name = "searchField") String searchField,
+                                       @RequestParam(name = "searchValue") String searchValue,
                                         @RequestParam(name = "page", defaultValue = "0") int page,
                                         @RequestParam(name = "size", defaultValue = "5") int size,
                                         Model model) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Car> usersPage = carService.findCarsByModelContainingIgnoreCase(searchModel, pageable);
-        model.addAttribute("searchModel",searchModel);
-        model.addAttribute("carsPage", usersPage);
+        Page<Car> carsPage = carService.findByFieldContainingIgnoreCase(searchField,searchValue,pageable);
+        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchValue", searchValue);
+        model.addAttribute("carsPage", carsPage);
         return "admin/list-cars";
     }
     @GetMapping("/update-car/{id}")

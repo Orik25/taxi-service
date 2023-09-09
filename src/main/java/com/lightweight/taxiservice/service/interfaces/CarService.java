@@ -7,6 +7,7 @@ import com.lightweight.taxiservice.entity.Driver;
 import com.lightweight.taxiservice.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -23,4 +24,5 @@ public interface CarService {
     Page<Car> findCarsByModelContainingIgnoreCase(String model, Pageable pageable);
 
     List<Car> findCarsWithoutDrivers();
+    Page<Car> findByFieldContainingIgnoreCase(String fieldName,String searchValue, Pageable pageable);
 }

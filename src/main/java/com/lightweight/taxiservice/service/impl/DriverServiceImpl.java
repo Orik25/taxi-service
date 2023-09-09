@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -94,8 +95,8 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Page<Driver> findDriversByLastNameContainingIgnoreCase(String model, Pageable pageable) {
-        return driverRepository.findDriversByLastNameContainingIgnoreCase(model, pageable);
+    public Page<Driver> findByFieldContainingIgnoreCase(String fieldName, String searchValue, Pageable pageable) {
+        return driverRepository.findByFieldContainingIgnoreCase(fieldName, searchValue, pageable);
     }
 
     private void isDatabaseEmpty() {

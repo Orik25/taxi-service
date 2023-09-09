@@ -58,13 +58,15 @@ public class UserController {
     }
 
     @GetMapping("/search-users")
-    public String searchUsersByLastName(@RequestParam(name = "searchLastName") String searchLastName,
+    public String searchUsersByLastName(@RequestParam(name = "searchField") String searchField,
+                                        @RequestParam(name = "searchValue") String searchValue,
                                         @RequestParam(name = "page", defaultValue = "0") int page,
                                         @RequestParam(name = "size", defaultValue = "5") int size,
                                         Model model) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<User> usersPage = userService.findByLastNameContainingIgnoreCase(searchLastName, pageable);
-        model.addAttribute("searchLastName", searchLastName);
+        Page<User> usersPage = userService.findByFieldContainingIgnoreCase(searchField, searchValue, pageable);
+        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchValue", searchValue);
         model.addAttribute("usersPage", usersPage);
         return "admin/list-users";
     }
