@@ -60,13 +60,15 @@ public class DriverController {
     }
 
     @GetMapping("/search-drivers")
-    public String searchDriversByLastName(@RequestParam(name = "searchLastName" ) String searchLastName,
+    public String searchDriversByLastName(@RequestParam(name = "searchField") String searchField,
+                                          @RequestParam(name = "searchValue") String searchValue,
                                        @RequestParam(name = "page", defaultValue = "0") int page,
                                        @RequestParam(name = "size", defaultValue = "5") int size,
                                        Model model) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Driver> driversPage = driverService.findDriversByLastNameContainingIgnoreCase(searchLastName, pageable);
-        model.addAttribute("searchLastName",searchLastName);
+        Page<Driver> driversPage = driverService.findByFieldContainingIgnoreCase(searchField,searchValue, pageable);
+        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchValue", searchValue);
         model.addAttribute("driversPage", driversPage);
         return "admin/list-drivers";
     }

@@ -114,6 +114,11 @@ public class CarServiceImpl implements CarService {
         return carRepository.findCarsWithoutDrivers();
     }
 
+    @Override
+    public Page<Car> findByFieldContainingIgnoreCase(String fieldName, String searchValue, Pageable pageable) {
+        return carRepository.findByFieldContainingIgnoreCase(fieldName,searchValue,pageable);
+    }
+
     private void isDatabaseEmpty() {
         carRepository.findFirstByOrderByIdAsc()
                 .orElseThrow(() -> new NoCarFoundException("Data base has not any records of cars"));

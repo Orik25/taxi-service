@@ -80,8 +80,14 @@
                                     <th COLSPAN="2">
                                         <form th:action="@{/system/search-drivers}" method="get">
                                             <div class="input-group mb-3 ">
-                                                <input type="text" class="form-control" name="searchLastName"
-                                                       placeholder="Search by Last name">
+                                                <input type="text" class="form-control" name="searchValue" placeholder="Search..." th:value="${searchValue}"/>
+                                                <select class="form-select" name="searchField">
+                                                    <option value="first_name" th:selected="${searchField == 'first_name'}">First Name</option>
+                                                    <option value="last_name" th:selected="${searchField == 'last_name'}">Last Name</option>
+                                                    <option value="phone" th:selected="${searchField == 'phone'}">Phone</option>
+                                                    <option value="email" th:selected="${searchField == 'email'}">Email</option>
+                                                    <option value="car" th:selected="${searchField == 'car'}">Car</option>
+                                                </select>
                                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
                                             </div>
                                         </form>
@@ -191,19 +197,19 @@
                                                         <li class="page-item"
                                                             th:classappend="${driversPage.first ? 'disabled' : ''}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchLastName} ? '/system/search-drivers?page=' + ${(driversPage.number - 1)} +'&size=' + ${driversPage.size} + '&searchLastName=' + ${searchLastName} : '/system/drivers?page=' + ${(driversPage.number - 1)} +'&size=' + ${driversPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&laquo;</a>
+                                                               th:href="@{${searchValue} ? '/system/search-drivers?page=' + ${(driversPage.number - 1)} +'&size=' + ${driversPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/drivers?page=' + ${(driversPage.number - 1)} +'&size=' + ${driversPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&laquo;</a>
                                                         </li>
                                                         <li class="page-item"
                                                             th:each="pageNumber : ${#numbers.sequence(0, driversPage.totalPages - 1)}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchLastName} ? '/system/search-drivers?page=' + ${pageNumber} + '&size=' + ${driversPage.size} + '&searchLastName=' + ${searchLastName} : '/system/drivers?page=' + ${pageNumber} + '&size=' + ${driversPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}"
+                                                               th:href="@{${searchValue} ? '/system/search-drivers?page=' + ${pageNumber} + '&size=' + ${driversPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/drivers?page=' + ${pageNumber} + '&size=' + ${driversPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}"
                                                                th:classappend="${driversPage.number == pageNumber ? 'active border border-dark' : ''}"
                                                                th:text="${pageNumber + 1}"></a>
                                                         </li>
                                                         <li class="page-item"
                                                             th:classappend="${driversPage.last ? 'disabled' : ''}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchLastName} ? '/system/search-drivers?page=' + ${(driversPage.number + 1)} + '&size=' + ${driversPage.size} + '&searchLastName=' + ${searchLastName} : '/system/drivers?page=' + ${(driversPage.number + 1)} + '&size=' +${driversPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&raquo;</a>
+                                                               th:href="@{${searchValue} ? '/system/search-drivers?page=' + ${(driversPage.number + 1)} + '&size=' + ${driversPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/drivers?page=' + ${(driversPage.number + 1)} + '&size=' +${driversPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&raquo;</a>
                                                         </li>
                                                     </ul>
                                                 </div>

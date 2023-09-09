@@ -121,8 +121,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findByLastNameContainingIgnoreCase(String lastName, Pageable pageable) {
-        return userRepository.findUsersByLastNameContainingIgnoreCase(lastName,pageable);
+    public Page<User> findByFieldContainingIgnoreCase(String searchField, String searchValue, Pageable pageable) {
+        return userRepository.findByFieldContainingIgnoreCase(searchField, searchValue, pageable);
     }
 
     private void isDatabaseEmpty() {

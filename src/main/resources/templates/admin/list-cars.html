@@ -80,8 +80,17 @@
                                     <th COLSPAN="2">
                                         <form th:action="@{/system/search-cars}" method="get">
                                             <div class="input-group mb-3 ">
-                                                <input type="text" class="form-control" name="searchModel"
-                                                       placeholder="Search by Model">
+                                                <input type="text" class="form-control" name="searchValue" placeholder="Search..." th:value="${searchValue}"/>
+                                                <select class="form-select" name="searchField">
+                                                    <option value="brand" th:selected="${searchField == 'brand'}">Brand</option>
+                                                    <option value="model" th:selected="${searchField == 'model'}">Model</option>
+                                                    <option value="year" th:selected="${searchField == 'year'}">Year</option>
+                                                    <option value="category" th:selected="${searchField == 'category'}">Category</option>
+                                                    <option value="status" th:selected="${searchField == 'status'}">Status</option>
+                                                    <option value="capacity" th:selected="${searchField == 'capacity'}">Capacity</option>
+                                                    <option value="driver" th:selected="${searchField == 'driver'}">Driver</option>
+
+                                                </select>
                                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
                                             </div>
                                         </form>
@@ -201,19 +210,19 @@
                                                         <li class="page-item"
                                                             th:classappend="${carsPage.first ? 'disabled' : ''}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchModel} ? '/system/search-cars?page=' + ${(carsPage.number - 1)} +'&size=' + ${carsPage.size} + '&searchModel=' + ${searchModel} : '/system/cars?page=' + ${(carsPage.number - 1)} +'&size=' + ${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&laquo;</a>
+                                                               th:href="@{${searchValue} ? '/system/search-cars?page=' + ${(carsPage.number - 1)} +'&size=' + ${carsPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/cars?page=' + ${(carsPage.number - 1)} +'&size=' + ${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&laquo;</a>
                                                         </li>
                                                         <li class="page-item"
                                                             th:each="pageNumber : ${#numbers.sequence(0, carsPage.totalPages - 1)}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchModel} ? '/system/search-cars?page=' + ${pageNumber} + '&size=' + ${carsPage.size} + '&searchModel=' + ${searchModel} : '/system/cars?page=' + ${pageNumber} + '&size=' + ${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}"
+                                                               th:href="@{${searchValue} ? '/system/search-cars?page=' + ${pageNumber} + '&size=' + ${carsPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/cars?page=' + ${pageNumber} + '&size=' + ${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}"
                                                                th:classappend="${carsPage.number == pageNumber ? 'active border border-dark' : ''}"
                                                                th:text="${pageNumber + 1}"></a>
                                                         </li>
                                                         <li class="page-item"
                                                             th:classappend="${carsPage.last ? 'disabled' : ''}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchModel} ? '/system/search-cars?page=' + ${(carsPage.number + 1)} + '&size=' + ${carsPage.size} + '&searchModel=' + ${searchModel} : '/system/cars?page=' + ${(carsPage.number + 1)} + '&size=' +${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&raquo;</a>
+                                                               th:href="@{${searchValue} ? '/system/search-cars?page=' + ${(carsPage.number + 1)} + '&size=' + ${carsPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/cars?page=' + ${(carsPage.number + 1)} + '&size=' +${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&raquo;</a>
                                                         </li>
                                                     </ul>
                                                 </div>
