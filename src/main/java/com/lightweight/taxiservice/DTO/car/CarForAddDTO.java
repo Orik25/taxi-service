@@ -13,7 +13,6 @@ public class CarForAddDTO {
     @NotBlank(message = "Model is mandatory")
     private String model;
 
-
     @NotNull(message = "Year is mandatory")
     private Integer year;
 
