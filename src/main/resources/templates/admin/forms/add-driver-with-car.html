@@ -155,17 +155,25 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="category">Category:</label>
-                                <!-- Повідомлення про помилку -->
-                                <div class="alert alert-danger form-control"
-                                     th:if="${#fields.hasErrors('car.category')}" style="height: 30px;">
+                            <div class="form-group col-md-7 mx-auto">
+                                <div class="alert alert-danger form-control" th:if="${#fields.hasErrors('car.category')}" style="height: 30px;">
                                     <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
                                         <span th:errors="*{car.category}" class="error">is required</span>
                                     </div>
                                 </div>
-                                <input type="text" th:field="*{car.category}" id="category" placeholder="Category"
-                                       class="form-control"/>
+                                <label for="category">Category:</label>
+                                <div class="input-group mb-2">
+
+                                    <select th:field="*{car.category}" id="category" class="form-control">
+                                        <option th:value="${null}">Select Category</option>
+                                        <option value="Regular">Regular</option>
+                                        <option value="Comfort">Comfort</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Delivery">Delivery</option>
+                                        <option value="Pet-friendly">Pet-friendly</option>
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                     </div>
