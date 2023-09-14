@@ -1,9 +1,7 @@
 package com.lightweight.taxiservice.DTO.order;
 
 import com.lightweight.taxiservice.DTO.order.CreatedOrderDTO;
-import com.lightweight.taxiservice.entity.ArrivalCoordinates;
-import com.lightweight.taxiservice.entity.DispatchCoordinates;
-import com.lightweight.taxiservice.entity.Order;
+import com.lightweight.taxiservice.entity.*;
 import com.lightweight.taxiservice.service.interfaces.DriverService;
 import com.lightweight.taxiservice.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +33,13 @@ public class ConverterOrderDTO {
                 newOrder
         );
         newOrder.setDispatchCoordinates(dispatchCoordinates);
-        newOrder.setDriver(driverService.findById(createdOrderDTO.getDriverId()));
-        newOrder.setUser(userService.findById(createdOrderDTO.getUserId()));
+        Driver driver = driverService.findById(createdOrderDTO.getDriverId());
+        User user = userService.findById(createdOrderDTO.getUserId());
+        newOrder.setDriver(driver);
+        newOrder.setUser(user);
+        driver.getOrders().add(newOrder);
+        user.getOrders().add(newOrder);
+
         System.out.println(createdOrderDTO.getUserId());
         return newOrder;
     }
