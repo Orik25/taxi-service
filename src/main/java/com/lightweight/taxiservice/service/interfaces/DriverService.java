@@ -16,6 +16,7 @@ public interface DriverService {
     Driver update(Long id, DriverUpdateDTO updateDriverDTO);
     void deleteById(Long id);
     List<Driver> findDriversWithoutCars();
+    List<Driver> findAvailableForOrderDrivers();
 
     Page<Driver> getAllDriversSorted(int page, int size, String sortField, String sortOrder);
 

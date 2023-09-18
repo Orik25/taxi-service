@@ -1,6 +1,7 @@
 package com.lightweight.taxiservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.lightweight.taxiservice.constant.OrderStatus;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -99,6 +100,15 @@ public class Driver {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Order getActiveOrder() {
+        for (Order order : orders) {
+            if(order.getStatus().equals(OrderStatus.ACTIVE.getStatus())){
+                return order;
+            }
+        }
+        throw new NullPointerException("Implement!!!(Entity Driver)");
     }
 
     @Override

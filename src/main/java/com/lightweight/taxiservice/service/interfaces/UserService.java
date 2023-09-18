@@ -20,5 +20,7 @@ public interface UserService{
 
     User registerUser(UserRegistrationDTO user);
     Page<User> getAllUsersSorted(int page, int size, String sortField, String sortOrder);
+
+    List<User> findAvailableForOrderUsers();
     Page<User> findByFieldContainingIgnoreCase(String searchField, String searchValue, Pageable pageable);
 }

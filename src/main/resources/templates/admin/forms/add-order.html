@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Update User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<div class="container">
+    <div id="loginbox" class="d-flex align-items-center justify-content-center">
+        <div class="col-md-7 col-sm-9">
+            <div class="card border-warning">
+                <div class="card-header bg-warning text-black">
+                    Update
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <!-- Update Form -->
+                        <form action="#" th:action="@{/system/add-order}" th:object="${order}" method="post">
+                            <div class="row">
+                                <!-- Ліва сторона -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Driver:</label>
+                                        <div class="alert alert-danger form-control"
+                                             th:if="${#fields.hasErrors('driver.id')}" style="height: 30px;">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="height: 100%;">
+                                                <span th:errors="*{driver.id}" class="error">is required</span>
+                                            </div>
+                                        </div>
+                                        <select th:field="${order.driver.id}" class="form-control">
+                                            <option th:value="${order.driver.id}"
+                                                    th:text="${order.driver.firstName != null ? order.driver.firstName + ' ' + order.driver.lastName : 'Choose a driver'}">
+                                                Choose a car
+                                            </option>
+                                            <option th:each="availableDriver : ${availableDrivers}"
+                                                    th:value="${availableDriver.id}"
+                                                    th:text="${availableDriver.firstName} + ' ' + ${availableDriver.lastName}"></option>
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Arrival Latitude:</label>
+                                        <div class="alert alert-danger form-control"
+                                             th:if="${#fields.hasErrors('arrivalCoordinates.latitude')}"
+                                             style=" height: 30px;">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="height: 100%;">
+                                                <span th:errors="*{arrivalCoordinates.latitude}" class="error">is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <input type="text" th:field="*{arrivalCoordinates.latitude}"
+                                                   placeholder="Latitude" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Arrival Longitude:</label>
+                                        <div class="alert alert-danger form-control"
+                                             th:if="${#fields.hasErrors('arrivalCoordinates.longitude')}"
+                                             style=" height: 30px;">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="height: 100%;">
+                                                <span th:errors="*{arrivalCoordinates.longitude}" class="error">is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <input type="text" th:field="*{arrivalCoordinates.longitude}"
+                                                   placeholder="Longitude" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Права сторона -->
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label>User:</label>
+                                        <div class="alert alert-danger form-control"
+                                             th:if="${#fields.hasErrors('user.id')}" style="height: 30px;">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="height: 100%;">
+                                                <span th:errors="*{user.id}" class="error">is required</span>
+                                            </div>
+                                        </div>
+                                        <select th:field="${order.user.id}" class="form-control">
+
+                                            <option th:value="${order.user.id}"
+                                                    th:text="${order.user.firstName != null ? order.user.firstName + ' ' + order.user.lastName : 'Choose a User'}">
+                                                Choose a car
+                                            </option>
+                                            <option th:each="availableUser : ${availableUsers}"
+                                                    th:value="${availableUser.id}"
+                                                    th:text="${availableUser.firstName} + ' ' + ${availableUser.lastName}"></option>
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dispatch Latitude</label>
+                                        <div class="alert alert-danger form-control"
+                                             th:if="${#fields.hasErrors('dispatchCoordinates.latitude')}"
+                                             style=" height: 30px;">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="height: 100%;">
+                                                <span th:errors="*{dispatchCoordinates.latitude}" class="error">is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <input type="text" th:field="*{dispatchCoordinates.latitude}"
+                                                   placeholder="Latitude" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dispatch Longitude</label>
+                                        <div class="alert alert-danger form-control"
+                                             th:if="${#fields.hasErrors('dispatchCoordinates.longitude')}"
+                                             style=" height: 30px;">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="height: 100%;">
+                                                <span th:errors="*{dispatchCoordinates.longitude}" class="error">is required</span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <input type="text" th:field="*{dispatchCoordinates.longitude}"
+                                                   placeholder="Longitude" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-7 mx-auto">
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="comment">Comment:</label>
+                                            <div class="alert alert-danger form-control"
+                                                 th:if="${#fields.hasErrors('comment')}"
+                                                 style=" height: 30px;">
+                                                <div class="d-flex align-items-center justify-content-center"
+                                                     style="height: 100%;">
+                                                    <span th:errors="*{comment}" class="error">is required</span>
+                                                </div>
+                                            </div>
+                                            <textarea th:field="*{comment}" id="comment" rows="3" class="form-control"
+                                                      placeholder="Comment"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-center">
+                                <input type="submit" class="btn btn-warning" value="Update Order">
+                            </div>
+                        </form>
+                        <!-- Коментар нижче форми -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

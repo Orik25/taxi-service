@@ -130,4 +130,20 @@ public class GlobalRestExceptionHandler {
         ordersErrorResponse.setTimeStamp(System.currentTimeMillis());
         return new ResponseEntity<>(ordersErrorResponse, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(NoArrivalCoordinatesFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(NoArrivalCoordinatesFoundException exception) {
+        ErrorResponse arrivalCoordinatesErrorResponse = new ErrorResponse();
+        arrivalCoordinatesErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        arrivalCoordinatesErrorResponse.setMessage(exception.getMessage());
+        arrivalCoordinatesErrorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(arrivalCoordinatesErrorResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(NoDispatchCoordinatesFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(NoDispatchCoordinatesFoundException exception) {
+        ErrorResponse dispatchCoordinatesErrorResponse = new ErrorResponse();
+        dispatchCoordinatesErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        dispatchCoordinatesErrorResponse.setMessage(exception.getMessage());
+        dispatchCoordinatesErrorResponse.setTimeStamp(System.currentTimeMillis());
+        return new ResponseEntity<>(dispatchCoordinatesErrorResponse, HttpStatus.NOT_FOUND);
+    }
 }

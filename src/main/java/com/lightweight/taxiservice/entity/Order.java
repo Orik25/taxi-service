@@ -15,6 +15,10 @@ public class Order {
     @Column
     private String comment;
 
+    @Column
+    private String status;
+
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     @JsonBackReference(value = "orderUser")
@@ -36,9 +40,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(String comment, User user, Driver driver,
-                 ArrivalCoordinates arrivalCoordinates, DispatchCoordinates dispatchCoordinates) {
+    public Order(String comment, String status, User user, Driver driver, ArrivalCoordinates arrivalCoordinates, DispatchCoordinates dispatchCoordinates) {
         this.comment = comment;
+        this.status = status;
         this.user = user;
         this.driver = driver;
         this.arrivalCoordinates = arrivalCoordinates;
@@ -59,6 +63,14 @@ public class Order {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User getUser() {
@@ -92,4 +104,7 @@ public class Order {
     public void setDispatchCoordinates(DispatchCoordinates dispatchCoordinates) {
         this.dispatchCoordinates = dispatchCoordinates;
     }
+
+
+
 }
