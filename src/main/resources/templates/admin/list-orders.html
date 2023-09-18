@@ -66,163 +66,172 @@
         </div>
 
 
-        <!-- CARS LIST -->
+        <!-- DRIVERS LIST -->
         <div class="col py-3">
-            <h3>Cars List</h3>
+            <h3>Orders List</h3>
             <div class="card">
                 <div class="card-body">
-                    <div th:fragment="carList">
+                    <div th:fragment="orderList">
 
                         <div class="col-md-12">
-                            <table id="usersTable" class="table table-striped table-responsive-md">
+                            <table id="ordersTable" class="table table-striped table-responsive-md">
                                 <thead>
                                 <tr>
                                     <th COLSPAN="2">
-                                        <form th:action="@{/system/search-cars}" method="get">
+                                        <form th:action="@{/system/search-orders}" method="get">
                                             <div class="input-group mb-3 ">
                                                 <input type="text" class="form-control" name="searchValue" placeholder="Search..." th:value="${searchValue}"/>
                                                 <select class="form-select" name="searchField">
-                                                    <option value="brand" th:selected="${searchField == 'brand'}">Brand</option>
-                                                    <option value="model" th:selected="${searchField == 'model'}">Model</option>
-                                                    <option value="year" th:selected="${searchField == 'year'}">Year</option>
-                                                    <option value="category" th:selected="${searchField == 'category'}">Category</option>
-                                                    <option value="status" th:selected="${searchField == 'status'}">Status</option>
-                                                    <option value="capacity" th:selected="${searchField == 'capacity'}">Capacity</option>
+                                                    <option value="comment" th:selected="${searchField == 'comment'}">Comment</option>
+                                                    <option value="user" th:selected="${searchField == 'user'}">User</option>
                                                     <option value="driver" th:selected="${searchField == 'driver'}">Driver</option>
+                                                    <option value="car" th:selected="${searchField == 'car'}">Car</option>
 
                                                 </select>
                                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
                                             </div>
                                         </form>
                                     </th>
-                                    <th COLSPAN="7">
+                                    <th COLSPAN="3">
                                         <div class="input-group mb-3 ">
-                                            <form th:action="@{/system/add-car}" method="get" style="margin-left:10%;">
-                                                <button class="btn btn-warning" type="submit">Add Car</button>
+                                            <form th:action="@{/system/add-order}" method="get"
+                                                  style="margin-left:10%;">
+                                                <button class="btn btn-warning" type="submit">Add Order
+                                                </button>
                                             </form>
                                         </div>
                                     </th>
-                                </tr>
+<!--                                    <th COLSPAN="3">-->
+<!--                                        <div class="input-group mb-3 ">-->
+<!--                                            <form th:action="@{/system/add-driver-with-car}" method="get">-->
+<!--                                                <button class="btn btn-warning" type="submit">Add Driver With Car-->
+<!--                                                </button>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+<!--                                    </th>-->
+<!--                                </tr>-->
                                 <tr>
                                     <th COLSPAN="9">
-                                        <a class="text-dark" th:href="@{/system/cars}" style="text-decoration: none;">Default
-                                            list</a>
+                                        <a class="text-dark" th:href="@{/system/orders}"
+                                           style="text-decoration: none;">Default list</a>
                                     </th>
                                 </tr>
 
 
                                 <tr>
                                     <th>
-                                        Brand
+                                        Comment
                                         <a class="text-warning"
-                                           th:href="@{/system/cars(sortField='brand', sortOrder='asc')}"
+                                           th:href="@{/system/orders(sortField='comment', sortOrder='asc')}"
                                            style="text-decoration: none;">▲</a>
                                         <a class="text-dark"
-                                           th:href="@{/system/cars(sortField='brand', sortOrder='desc')}"
+                                           th:href="@{/system/orders(sortField='comment', sortOrder='desc')}"
                                            style="text-decoration: none;">▼</a>
                                     </th>
                                     <th>
-                                        Model
+                                        User
                                         <a class="text-warning"
-                                           th:href="@{/system/cars(sortField='model', sortOrder='asc')}"
+                                           th:href="@{/system/orders(sortField='user', sortOrder='asc')}"
                                            style="text-decoration: none;">▲</a>
                                         <a class="text-dark"
-                                           th:href="@{/system/cars(sortField='model', sortOrder='desc')}"
+                                           th:href="@{/system/orders(sortField='user', sortOrder='desc')}"
                                            style="text-decoration: none;">▼</a>
                                     </th>
                                     <th>
-                                        Year
+                                        Driver
                                         <a class="text-warning"
-                                           th:href="@{/system/cars(sortField='year', sortOrder='asc')}"
+                                           th:href="@{/system/orders(sortField='driver', sortOrder='asc')}"
                                            style="text-decoration: none;">▲</a>
                                         <a class="text-dark"
-                                           th:href="@{/system/cars(sortField='year', sortOrder='desc')}"
+                                           th:href="@{/system/orders(sortField='driver', sortOrder='desc')}"
+                                           style="text-decoration: none;">▼</a>
+                                    </th>
+                                    <th>Car
+                                        <a class="text-warning"
+                                           th:href="@{/system/orders(sortField='driver.car', sortOrder='asc')}"
+                                           style="text-decoration: none;">▲</a>
+                                        <a class="text-dark"
+                                           th:href="@{/system/orders(sortField='driver.car', sortOrder='desc')}"
+                                           style="text-decoration: none;">▼</a></th>
+                                    <th>
+                                        Dispatch
+                                        <a class="text-warning"
+                                           th:href="@{/system/orders(sortField='dispatchCoordinates', sortOrder='asc')}"
+                                           style="text-decoration: none;">▲</a>
+                                        <a class="text-dark"
+                                           th:href="@{/system/orders(sortField='dispatchCoordinates', sortOrder='desc')}"
                                            style="text-decoration: none;">▼</a>
                                     </th>
                                     <th>
-                                        Category
+                                        Arrival
                                         <a class="text-warning"
-                                           th:href="@{/system/cars(sortField='category', sortOrder='asc')}"
+                                           th:href="@{/system/orders(sortField='arrivalCoordinates', sortOrder='asc')}"
                                            style="text-decoration: none;">▲</a>
                                         <a class="text-dark"
-                                           th:href="@{/system/cars(sortField='category', sortOrder='desc')}"
+                                           th:href="@{/system/orders(sortField='arrivalCoordinates', sortOrder='desc')}"
                                            style="text-decoration: none;">▼</a>
                                     </th>
-                                    <th>
-                                        Status
-                                        <a class="text-warning"
-                                           th:href="@{/system/cars(sortField='status', sortOrder='asc')}"
-                                           style="text-decoration: none;">▲</a>
-                                        <a class="text-dark"
-                                           th:href="@{/system/cars(sortField='status', sortOrder='desc')}"
-                                           style="text-decoration: none;">▼</a>
-                                    </th>
-                                    <th>
-                                        Capacity
-                                        <a class="text-warning"
-                                           th:href="@{/system/cars(sortField='capacity', sortOrder='asc')}"
-                                           style="text-decoration: none;">▲</a>
-                                        <a class="text-dark"
-                                           th:href="@{/system/cars(sortField='capacity', sortOrder='desc')}"
-                                           style="text-decoration: none;">▼</a>
-                                    </th>
-                                    <th>Driver</th>
+
                                     <th>Edit</th>
+                                    <th>Archive</th>
                                     <th>Delete</th>
                                 </tr>
 
 
                                 </thead>
                                 <tbody>
-                                <div th:switch="${carsPage.content.size()}" class="container my-3">
+                                <div th:switch="${ordersPage.content.size()}" class="container my-3">
                                     <tr th:case="0">
-                                        <th COLSPAN="9">
-                                            <h2 CLASS=" d-flex align-items-center justify-content-center">No Cars
+                                        <th COLSPAN="10">
+                                            <h2 CLASS=" d-flex align-items-center justify-content-center">No Drivers
                                                 found</h2>
                                         </th>
                                     </tr>
 
                                     <div th:case="*">
-                                        <tr th:each="car : ${carsPage.content}">
-                                            <td th:text="${car.brand}"></td>
-                                            <td th:text="${car.model}"></td>
-                                            <td th:text="${car.year}"></td>
-                                            <td th:text="${car.category}"></td>
-                                            <td th:text="${car.status}"></td>
-                                            <td th:text="${car.capacity}"></td>
-                                            <td th:text="${car.driver != null ? car.driver.firstName + ' ' + car.driver.lastName : 'WITHOUT DRIVER'}"></td>
+                                        <tr th:each="order : ${ordersPage.content}">
+                                            <td th:text="${order.comment != null ? order.comment  : 'WITHOUT COMMENT'}"></td>
+                                            <td th:text="${order.user.firstName + ' ' + order.user.lastName}"></td>
+                                            <td th:text="${order.driver.firstName + ' ' + order.driver.lastName}"></td>
+                                            <td th:text="${order.driver.car.brand + ' ' + order.driver.car.model}"></td>
+                                            <td th:text="${order.arrivalCoordinates.latitude + ' ' + order.arrivalCoordinates.longitude }"></td>
+                                            <td th:text="${order.dispatchCoordinates.latitude + ' ' + order.dispatchCoordinates.longitude }"></td>
 
 
                                             <td>
-                                                <a th:href="@{/system/update-car/{id}(id=${car.id})}"
+                                                <a th:href="@{/system/update-order/{id}(id=${order.id})}"
                                                    class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a>
                                             </td>
-                                            <td><a th:href="@{/system/delete-car/{id}(id=${car.id})}"
+                                            <td>
+                                                <a th:href="@{/system/archive-order/{id}(id=${order.id})}"
+                                                   class="btn btn-warning"><i class="fas fa-user-edit ml-2"></i></a>
+                                            </td>
+                                            <td><a th:href="@{/system/delete-order/{id}(id=${order.id})}"
                                                    class="btn btn-warning"><i class="fas fa-user-times ml-2"
                                                                               onclick="if(!(confirm('Are you sure?'))) return false"></i></a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td COLSPAN="9">
-                                                <div th:if="${carsPage.totalPages > 1}"
+                                            <td COLSPAN="10">
+                                                <div th:if="${ordersPage.totalPages > 1}"
                                                      class="d-flex justify-content-center my-3">
                                                     <ul class="pagination">
                                                         <li class="page-item"
-                                                            th:classappend="${carsPage.first ? 'disabled' : ''}">
+                                                            th:classappend="${ordersPage.first ? 'disabled' : ''}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchValue} ? '/system/search-cars?page=' + ${(carsPage.number - 1)} +'&size=' + ${carsPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/cars?page=' + ${(carsPage.number - 1)} +'&size=' + ${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&laquo;</a>
+                                                               th:href="@{${searchValue} ? '/system/search-orders?page=' + ${(ordersPage.number - 1)} +'&size=' + ${ordersPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/orders?page=' + ${(ordersPage.number - 1)} +'&size=' + ${ordersPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&laquo;</a>
                                                         </li>
                                                         <li class="page-item"
-                                                            th:each="pageNumber : ${#numbers.sequence(0, carsPage.totalPages - 1)}">
+                                                            th:each="pageNumber : ${#numbers.sequence(0, ordersPage.totalPages - 1)}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchValue} ? '/system/search-cars?page=' + ${pageNumber} + '&size=' + ${carsPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/cars?page=' + ${pageNumber} + '&size=' + ${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}"
-                                                               th:classappend="${carsPage.number == pageNumber ? 'active border border-dark' : ''}"
+                                                               th:href="@{${searchValue} ? '/system/search-orders?page=' + ${pageNumber} + '&size=' + ${ordersPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/orders?page=' + ${pageNumber} + '&size=' + ${ordersPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}"
+                                                               th:classappend="${ordersPage.number == pageNumber ? 'active border border-dark' : ''}"
                                                                th:text="${pageNumber + 1}"></a>
                                                         </li>
                                                         <li class="page-item"
-                                                            th:classappend="${carsPage.last ? 'disabled' : ''}">
+                                                            th:classappend="${ordersPage.last ? 'disabled' : ''}">
                                                             <a class="page-link bg-warning text-dark"
-                                                               th:href="@{${searchValue} ? '/system/search-cars?page=' + ${(carsPage.number + 1)} + '&size=' + ${carsPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/cars?page=' + ${(carsPage.number + 1)} + '&size=' +${carsPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&raquo;</a>
+                                                               th:href="@{${searchValue} ? '/system/search-orders?page=' + ${(ordersPage.number + 1)} + '&size=' + ${ordersPage.size} + '&searchField=' + ${searchField} + '&searchValue=' + ${searchValue} : '/system/orders?page=' + ${(ordersPage.number + 1)} + '&size=' +${ordersPage.size} + '&sortField=' + ${sortField} + '&sortOrder=' + ${sortOrder}}">&raquo;</a>
                                                         </li>
                                                     </ul>
                                                 </div>

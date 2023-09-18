@@ -16,6 +16,12 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
 
     Optional<Driver> findByEmail(String email);
 
+    @Query(value = "SELECT d.* FROM drivers d " +
+            "INNER JOIN cars c ON d.id = c.driver_id " +
+            "WHERE c.status = 'available'",
+            nativeQuery = true)
+    List<Driver> findAvailableForOrderDrivers();
+
     @Query(value = "SELECT drivers.id, drivers.first_name, drivers.last_name,drivers.phone,drivers.email FROM drivers\n" +
             "LEFT JOIN cars ON drivers.id = cars.driver_id\n" +
             "WHERE cars.driver_id IS NULL", nativeQuery = true)

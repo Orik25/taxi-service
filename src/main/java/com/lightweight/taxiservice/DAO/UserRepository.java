@@ -18,6 +18,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findFirstByOrderByIdAsc();
 
+    @Query(value = "SELECT u.* FROM users u " +
+            "INNER JOIN roles r ON u.role_id = r.id "+
+            "LEFT JOIN orders o ON u.id = o.user_id AND o.status = 'active' " +
+            "WHERE o.id IS NULL AND r.name = 'ROLE_USER' ",
+            nativeQuery = true)
+    List<User> findAvailableForOrderUsers();
+
     @Query(value = "SELECT u.*,r.id as roles_id, r.name FROM users u " +
             "INNER JOIN roles r ON u.role_id = r.id " +
             "WHERE " +

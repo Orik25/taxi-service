@@ -3,6 +3,7 @@ package com.lightweight.taxiservice.controller.RESTcontroller;
 
 import com.lightweight.taxiservice.DTO.order.ConverterOrderDTO;
 import com.lightweight.taxiservice.DTO.order.CreatedOrderDTO;
+import com.lightweight.taxiservice.DTO.order.OrderForUpdateDTO;
 import com.lightweight.taxiservice.entity.Order;
 import com.lightweight.taxiservice.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class OrderRESTController {
     }
 
     @PutMapping("/orders/{orderId}")
-    public Order updateOrder(@PathVariable Long orderId, @RequestBody Order updatedOrder) {
+    public Order updateOrder(@PathVariable Long orderId, @RequestBody OrderForUpdateDTO updatedOrder) {
         updatedOrder.setId(orderId);
-        return orderService.update(updatedOrder);
+        return orderService.update(orderId,updatedOrder);
     }
 
     @DeleteMapping("/orders/{orderId}")

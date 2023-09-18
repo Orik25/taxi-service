@@ -99,6 +99,11 @@ public class DriverServiceImpl implements DriverService {
         return driverRepository.findByFieldContainingIgnoreCase(fieldName, searchValue, pageable);
     }
 
+    @Override
+    public List<Driver> findAvailableForOrderDrivers() {
+        return driverRepository.findAvailableForOrderDrivers();
+    }
+
     private void isDatabaseEmpty() {
         driverRepository.findFirstByOrderByIdAsc()
                 .orElseThrow(() -> new NoDriverFoundException("Data base has not any records of drivers"));

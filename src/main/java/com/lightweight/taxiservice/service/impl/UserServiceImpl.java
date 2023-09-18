@@ -125,6 +125,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByFieldContainingIgnoreCase(searchField, searchValue, pageable);
     }
 
+    @Override
+    public List<User> findAvailableForOrderUsers() {
+        return userRepository.findAvailableForOrderUsers();
+    }
+
     private void isDatabaseEmpty() {
         userRepository.findFirstByOrderByIdAsc()
                 .orElseThrow(() -> new NoUserFoundException("Data base has not any records of users"));

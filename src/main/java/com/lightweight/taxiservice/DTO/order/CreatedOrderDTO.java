@@ -1,13 +1,29 @@
 package com.lightweight.taxiservice.DTO.order;
 
+import com.lightweight.taxiservice.DTO.coordinates.CoordinateForNewOrderDTO;
+import com.lightweight.taxiservice.DTO.driver.DriverForUpdateCarDTO;
+import com.lightweight.taxiservice.DTO.driver.DriverForUpdateOrderDTO;
+import com.lightweight.taxiservice.DTO.user.UserForUpdateOrderDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class CreatedOrderDTO {
+
+    @Size(max = 250, message = "Size of comment must be less than 250 characters")
     private String comment;
-    private CoordinateDTO arrivalCoordinates;
-    private CoordinateDTO dispatchCoordinates;
 
-    private Long userId;
+    @Valid
+    private CoordinateForNewOrderDTO arrivalCoordinates;
 
-    private Long driverId;
+    @Valid
+    private CoordinateForNewOrderDTO dispatchCoordinates;
+
+    @Valid
+    private UserForUpdateOrderDTO user;
+
+    @Valid
+    private DriverForUpdateOrderDTO driver;
 
     public String getComment() {
         return comment;
@@ -17,35 +33,35 @@ public class CreatedOrderDTO {
         this.comment = comment;
     }
 
-    public CoordinateDTO getArrivalCoordinates() {
+    public CoordinateForNewOrderDTO getArrivalCoordinates() {
         return arrivalCoordinates;
     }
 
-    public void setArrivalCoordinates(CoordinateDTO arrivalCoordinates) {
+    public void setArrivalCoordinates(CoordinateForNewOrderDTO arrivalCoordinates) {
         this.arrivalCoordinates = arrivalCoordinates;
     }
 
-    public CoordinateDTO getDispatchCoordinates() {
+    public CoordinateForNewOrderDTO getDispatchCoordinates() {
         return dispatchCoordinates;
     }
 
-    public void setDispatchCoordinates(CoordinateDTO dispatchCoordinates) {
+    public void setDispatchCoordinates(CoordinateForNewOrderDTO dispatchCoordinates) {
         this.dispatchCoordinates = dispatchCoordinates;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserForUpdateOrderDTO getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserForUpdateOrderDTO user) {
+        this.user = user;
     }
 
-    public Long getDriverId() {
-        return driverId;
+    public DriverForUpdateOrderDTO getDriver() {
+        return driver;
     }
 
-    public void setDriverId(Long driverId) {
-        this.driverId = driverId;
+    public void setDriver(DriverForUpdateOrderDTO driver) {
+        this.driver = driver;
     }
 }
